@@ -1,0 +1,466 @@
+.header-section {
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 99;
+  background: transparent;
+  transition: all 0.3s ease;
+  padding: 20px 0;
+
+  &.scrolled {
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    padding: 15px 0;
+  }
+}
+
+.logo {
+  padding: 0;
+  transition: all 0.3s ease;
+
+  img {
+    max-width: 150px;
+    transition: all 0.3s ease;
+  }
+}
+
+.nav-menu {
+  text-align: center;
+  padding: 0;
+  transition: all 0.3s ease;
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      display: inline-block;
+      margin-left: 30px;
+      position: relative;
+
+      &:hover {
+        > .dropdown {
+          opacity: 1;
+          visibility: visible;
+          top: 100%;
+        }
+      }
+
+      &.active > a {
+        color: #f36100;
+      }
+
+      a, .logout-link {
+        font-size: 16px;
+        font-weight: 600;
+        color: #ffffff;
+        text-decoration: none;
+        transition: all 0.3s;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        padding: 5px 0;
+        display: block;
+
+        &:hover {
+          color: #f36100;
+        }
+      }
+
+      &.coach-dashboard-link {
+        color: #ff6b35;
+        font-weight: 600;
+        position: relative;
+        
+        &:hover {
+          color: #ff8c5a;
+        }
+        
+        &:after {
+          background: #ff6b35;
+        }
+      }
+
+      .dropdown {
+        position: absolute;
+        left: 0;
+        top: 120%;
+        width: 220px;
+        background: #ffffff;
+        padding: 15px 0;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+
+        li {
+          display: block;
+          margin: 0;
+          padding: 0 20px;
+
+          a {
+            color: #333333;
+            text-shadow: none;
+            padding: 8px 0;
+            font-size: 14px;
+
+            &:hover {
+              color: #f36100;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.scrolled {
+  .nav-menu {
+    ul {
+      li {
+        a, .logout-link {
+          color: #333333;
+          text-shadow: none;
+        }
+      }
+    }
+  }
+}
+
+.top-option {
+  text-align: right;
+  padding: 0;
+  transition: all 0.3s ease;
+
+  .to-search {
+    display: inline-block;
+    margin-right: 20px;
+    cursor: pointer;
+
+    i {
+      font-size: 20px;
+      color: #ffffff;
+      transition: all 0.3s;
+    }
+  }
+
+  .to-social {
+    display: inline-block;
+
+    a {
+      display: inline-block;
+      font-size: 20px;
+      color: #ffffff;
+      margin-left: 15px;
+      transition: all 0.3s;
+
+      &:hover {
+        color: #f36100;
+      }
+    }
+  }
+}
+
+.scrolled {
+  .top-option {
+    .to-search i,
+    .to-social a {
+      color: #333333;
+    }
+  }
+}
+
+// Mobile Menu Styles
+.canvas-open {
+  display: none;
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 24px;
+  color: #ffffff;
+  cursor: pointer;
+  z-index: 100;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #f36100;
+  }
+}
+
+.scrolled .canvas-open {
+  color: #333333;
+}
+
+.mobile-menu {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 85%;
+  max-width: 400px;
+  height: 100vh;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+  z-index: 9999;
+  padding: 0;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  overflow-y: auto;
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.3);
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+  }
+
+  &.active {
+    transform: translateX(0);
+  }
+
+  .mobile-menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 2;
+
+    .logo {
+      img {
+        max-width: 150px;
+        filter: brightness(1.1);
+      }
+    }
+
+    .mobile-menu-close {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+
+      i {
+        font-size: 20px;
+        color: #ffffff;
+      }
+
+      &:hover {
+        background: rgba(243, 97, 0, 0.2);
+        
+        i {
+          color: #f36100;
+        }
+      }
+    }
+  }
+
+  .mobile-nav {
+    padding: 1rem 0;
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        margin: 0;
+        position: relative;
+
+        a {
+          font-size: 1rem;
+          font-weight: 500;
+          color: rgba(255, 255, 255, 0.9);
+          text-decoration: none;
+          display: flex;
+          align-items: center;
+          padding: 1rem 1.5rem;
+          transition: background-color 0.2s ease;
+          border-left: 3px solid transparent;
+          position: relative;
+
+          &:hover, &.active {
+            color: #ffffff;
+            border-left-color: #f36100;
+            background: rgba(243, 97, 0, 0.1);
+          }
+
+          i {
+            margin-right: 1rem;
+            font-size: 1.2rem;
+            width: 24px;
+            text-align: center;
+            opacity: 0.8;
+          }
+        }
+
+        &.coach-dashboard-link a {
+          color: rgba(255, 255, 255, 0.9);
+          font-weight: 500;
+          background: transparent;
+          border-left-color: transparent;
+
+          &:hover, &.active {
+            color: #ffffff;
+            border-left-color: #f36100;
+            background: rgba(243, 97, 0, 0.1);
+          }
+        }
+
+        .logout-link {
+          color: #ff4d4d;
+          font-weight: 500;
+          border-left-color: #ff4d4d;
+
+          &:hover {
+            color: #ff6b6b;
+            background: rgba(255, 77, 77, 0.1);
+          }
+        }
+      }
+    }
+  }
+
+  .mobile-social {
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    position: sticky;
+    bottom: 0;
+
+    a {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 50%;
+      color: rgba(255, 255, 255, 0.9);
+      transition: background-color 0.2s ease;
+
+      i {
+        font-size: 1.2rem;
+      }
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: #f36100;
+      }
+    }
+  }
+}
+
+// Add overlay when mobile menu is open
+.mobile-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9998;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@media (max-width: 991px) {
+  .canvas-open {
+    display: block;
+  }
+
+  .header-section {
+    padding: 15px 0;
+  }
+
+  .top-option {
+    display: none;
+  }
+}
+
+// Add styles to ensure content doesn't get hidden behind the fixed header
+:host ::ng-deep {
+  router-outlet + * {
+    display: block;
+    padding-top: 80px; // Adjust this value based on your header height
+  }
+}
+
+// Snackbar Styles
+::ng-deep .warning-snackbar {
+  background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%) !important;
+  color: white !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 20px rgba(255, 152, 0, 0.3) !important;
+  
+  .mat-simple-snackbar-action {
+    color: white !important;
+    font-weight: 600 !important;
+  }
+}
+
+::ng-deep .success-snackbar {
+  background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%) !important;
+  color: white !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 20px rgba(76, 175, 80, 0.3) !important;
+  
+  .mat-simple-snackbar-action {
+    color: white !important;
+    font-weight: 600 !important;
+  }
+}
+
+::ng-deep .error-snackbar {
+  background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%) !important;
+  color: white !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 20px rgba(244, 67, 54, 0.3) !important;
+  
+  .mat-simple-snackbar-action {
+    color: white !important;
+    font-weight: 600 !important;
+  }
+}
+
+// Access Restriction Dialog Styles
+::ng-deep .access-restriction-dialog {
+  .mat-mdc-dialog-container {
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  .mat-mdc-dialog-surface {
+    border-radius: 12px !important;
+    overflow: hidden !important;
+  }
+}

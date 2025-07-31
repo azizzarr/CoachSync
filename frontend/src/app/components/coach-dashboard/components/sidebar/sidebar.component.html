@@ -1,0 +1,29 @@
+<div class="sidebar" [class.collapsed]="isCollapsed">
+  <div class="sidebar-header">
+    <div class="logo">
+     
+      <img src="assets/img/CoachSync.png" alt="Logo" class="logo-image">
+    </div>
+    <button class="toggle-button" (click)="toggleSidebar()">
+      <fa-icon [icon]="isCollapsed ? faChevronRight : faChevronLeft"></fa-icon>
+    </button>
+  </div>
+
+  <nav class="sidebar-nav">
+    <ul class="nav-list">
+      <li *ngFor="let item of navItems" class="nav-item">
+        <a [routerLink]="item.path" routerLinkActive="active" class="nav-link">
+          <fa-icon [icon]="item.icon" class="nav-icon"></fa-icon>
+          <span class="nav-label" *ngIf="!isCollapsed">{{item.label}}</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="sidebar-footer">
+    <button class="sign-out-button" (click)="onSignOut()">
+      <fa-icon [icon]="faSignOut" class="sign-out-icon"></fa-icon>
+      <span *ngIf="!isCollapsed">Sign Out</span>
+    </button>
+  </div>
+</div> 

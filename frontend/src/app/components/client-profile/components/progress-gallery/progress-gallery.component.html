@@ -1,0 +1,44 @@
+<div class="progress-gallery-container">
+  <div class="gallery-header" (click)="toggleCollapse()">
+    <div class="header-title">
+      <h2>Progress Gallery</h2>
+      <span class="photo-count">{{ photos.length }} Photos</span>
+    </div>
+    <div class="header-actions">
+      <button class="add-photo-btn" mat-raised-button color="primary" (click)="openAddPhotoModal(); $event.stopPropagation()">
+        <mat-icon>add_photo_alternate</mat-icon>
+        <span>Add Photo</span>
+      </button>
+      <button class="view-all-btn" mat-button>
+        <span>View All</span>
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+      <mat-icon class="collapse-icon" [class.collapsed]="isCollapsed">expand_more</mat-icon>
+    </div>
+  </div>
+
+  <div class="gallery-content" [class.collapsed]="isCollapsed">
+    <div class="timeline-scroll">
+      <div class="photo-item" *ngFor="let photo of photos" (click)="openPhotoModal(photo)">
+        <div class="photo-card">
+          <div class="photo-badge" [class]="photo.category">
+            <mat-icon>{{ getCategoryIcon(photo.category) }}</mat-icon>
+          </div>
+          <img [src]="photo.imageUrl" [alt]="getCategoryLabel(photo.category)">
+          <div class="photo-overlay">
+            <div class="photo-info">
+              <div class="photo-date">
+                <mat-icon>calendar_today</mat-icon>
+                <span>{{ photo.date | date:'mediumDate' }}</span>
+              </div>
+              <div class="photo-weight">
+                <mat-icon>scale</mat-icon>
+                <span>{{ photo.weight }} kg</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

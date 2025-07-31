@@ -1,0 +1,232 @@
+.coach-dashboard {
+  display: flex;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f0c29 0%, #1a1a2e 50%, #16213e 100%);
+  position: relative;
+  overflow-x: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="rgba(255,255,255,0.03)" d="M50 0L100 50L50 100L0 50Z"/></svg>');
+    background-size: 20px 20px;
+    opacity: 0.1;
+    pointer-events: none;
+  }
+
+  app-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 280px;
+    z-index: 1000;
+    transition: transform 0.3s ease;
+  }
+
+  .main-content {
+    flex: 1;
+    margin-left: 280px;
+    padding: 2rem;
+    position: relative;
+    z-index: 1;
+    width: calc(100% - 280px);
+    transition: all 0.3s ease;
+
+    &.sidebar-collapsed {
+      margin-left: 60px;
+      width: calc(100% - 60px);
+    }
+  }
+
+  .sidebar-toggle {
+    position: fixed;
+    top: 1rem;
+    left: 300px;
+    z-index: 1001;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    fa-icon {
+      font-size: 1.2rem;
+    }
+  }
+
+  .dashboard-content {
+    margin-top: 2rem;
+  }
+
+  .dashboard-grid {
+    display: grid;
+    gap: 2rem;
+    width: 100%;
+  }
+
+  .dashboard-main {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  app-stats-overview {
+    margin-bottom: 0;
+  }
+
+  app-activity-timeline {
+    flex: 1;
+    min-height: 0;
+  }
+
+  .dashboard-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+
+    h2 {
+      margin: 0;
+      color: white;
+      font-size: 1.25rem;
+      font-weight: 600;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-action {
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.7);
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+      }
+    }
+  }
+
+  .card-content {
+    color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 1200px) {
+  .coach-dashboard {
+    .main-content {
+      padding: 1.5rem;
+    }
+    
+    .dashboard-grid {
+      gap: 1.5rem;
+    }
+
+    .dashboard-main {
+      gap: 1.5rem;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .coach-dashboard {
+    .dashboard-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .coach-dashboard {
+    app-sidebar {
+      transform: translateX(-280px);
+
+      &.expanded {
+        transform: translateX(0);
+      }
+    }
+
+    .main-content {
+      margin-left: 0;
+      width: 100%;
+      padding: 1rem;
+    }
+
+    .dashboard-content {
+      margin-top: 1rem;
+    }
+
+    .dashboard-grid {
+      gap: 1rem;
+    }
+
+    .dashboard-main {
+      gap: 1rem;
+    }
+
+    .sidebar-toggle {
+      left: 1rem;
+    }
+  }
+}
+
+// For very small screens
+@media (max-width: 480px) {
+  .coach-dashboard {
+    .main-content {
+      padding: 0.75rem;
+    }
+
+    .dashboard-grid,
+    .dashboard-main {
+      gap: 0.75rem;
+    }
+
+    .dashboard-card {
+      border-radius: 12px;
+      padding: 0.75rem;
+    }
+
+    .sidebar-toggle {
+      width: 36px;
+      height: 36px;
+      top: 0.75rem;
+      left: 0.75rem;
+    }
+  }
+} 

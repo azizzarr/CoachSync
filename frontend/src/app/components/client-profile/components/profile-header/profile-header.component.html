@@ -1,0 +1,70 @@
+<div class="profile-header">
+  <div class="header-banner">
+    <div class="header-content">
+      <div class="profile-section">
+        <div class="profile-photo-container">
+          <img [src]="avatarUrl" alt="Profile Photo" class="profile-photo">
+          <button class="edit-photo-btn" (click)="onEditPhoto()">
+            <fa-icon [icon]="faEdit"></fa-icon>
+          </button>
+        </div>
+        <div class="profile-info">
+          <div class="name-section">
+            <h1>{{ displayName }}</h1>
+            <div class="client-meta">
+              <span class="client-id">
+                <fa-icon [icon]="faIdBadge" class="meta-icon"></fa-icon>
+                ID: {{userProfile.id}}
+              </span>
+              <div class="toggle-container">
+                <label class="switch">
+                  <input class="togglesw" type="checkbox" [checked]="userProfile.isActive" (change)="onToggleStatus($event)">
+                  <div class="indicator left"></div>
+                  <div class="indicator right"></div>
+                  <div class="button"></div>
+                </label>
+              </div>
+              <span class="status-badge" [class.active]="userProfile.isActive" [class.paused]="!userProfile.isActive">
+                <fa-icon [icon]="userProfile.isActive ? faCheckCircle : faPauseCircle" class="status-icon"></fa-icon>
+                {{userProfile.isActive ? 'Active' : 'Not Active'}}
+              </span>
+            </div>
+          </div>
+          <div class="info-grid">
+            <div class="info-item">
+              <fa-icon [icon]="faCalendar" class="info-icon"></fa-icon>
+              <span>Member since {{ memberSince }}</span>
+            </div>
+            <div class="info-item">
+              <fa-icon [icon]="faDumbbell" class="info-icon"></fa-icon>
+              <span>Workouts: {{ userProfile.workouts?.length || 0 }}</span>
+            </div>
+            <div class="info-item">
+              <fa-icon [icon]="faUserTie" class="info-icon"></fa-icon>
+              <span>Trainer: {{ userProfile.trainerName || 'Not Assigned' }}</span>
+            </div>
+            <div class="info-item">
+              <fa-icon [icon]="faStar" class="info-icon"></fa-icon>
+              <span>{{userProfile.role}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="bottom-section">
+        <div class="actions-section">
+          <div class="ai-workout-container">
+            <button mat-raised-button class="ai-workout-button" (click)="onGenerateWorkoutPlan()" [disabled]="isGeneratingWorkoutPlan">
+              <div class="button-content">
+                <div class="icon-wrapper">
+                  <fa-icon [icon]="faWandMagicSparkles" class="ai-icon"></fa-icon>
+                </div>
+                <span class="button-text">{{ isGeneratingWorkoutPlan ? 'Generating...' : 'Generate AI Workout Plan' }}</span>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

@@ -1,0 +1,11 @@
+<div class="coach-dashboard">
+  <app-coach-sidebar (sidebarToggle)="onSidebarToggle($event)"></app-coach-sidebar>
+  <div class="main-content" [class.sidebar-collapsed]="isSidebarCollapsed">
+    <app-coach-header></app-coach-header>
+    
+    <div class="dashboard-content">
+      <router-outlet></router-outlet>
+      <app-activity-timeline></app-activity-timeline>
+    </div>
+  </div>
+</div> 

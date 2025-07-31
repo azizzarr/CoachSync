@@ -1,0 +1,123 @@
+<div class="personal-info-card">
+  <div class="card-header">
+    <h3>Personal Information</h3>
+    <div class="header-actions">
+      <button mat-icon-button class="collapse-button" (click)="toggleExpand()">
+        <mat-icon>{{ isExpanded ? 'expand_less' : 'expand_more' }}</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="card-content" *ngIf="profile" [class.collapsed]="!isExpanded">
+    <div class="info-grid">
+      <div class="info-item">
+        <div class="info-icon">
+          <mat-icon>cake</mat-icon>
+        </div>
+        <div class="info-content">
+          <div class="info-label">Birth Date</div>
+          <div class="info-value">{{ profile.dateOfBirth | date:'mediumDate' }}</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">
+          <mat-icon>wc</mat-icon>
+        </div>
+        <div class="info-content">
+          <div class="info-label">Gender</div>
+          <div class="info-value">{{ profile.gender }}</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">
+          <mat-icon>height</mat-icon>
+        </div>
+        <div class="info-content">
+          <div class="info-label">Height</div>
+          <div class="info-value">{{ profile.height }} cm</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">
+          <mat-icon>monitor_weight</mat-icon>
+        </div>
+        <div class="info-content">
+          <div class="info-label">Current Weight</div>
+          <div class="info-value">{{ profile.currentWeight }} kg</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">
+          <mat-icon>flag</mat-icon>
+        </div>
+        <div class="info-content">
+          <div class="info-label">Target Weight</div>
+          <div class="info-value">{{ profile.targetWeight }} kg</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">
+          <mat-icon>directions_run</mat-icon>
+        </div>
+        <div class="info-content">
+          <div class="info-label">Activity Level</div>
+          <div class="info-value">{{ profile.activityLevel }}</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">
+          <mat-icon>fitness_center</mat-icon>
+        </div>
+        <div class="info-content">
+          <div class="info-label">Fitness Goals</div>
+          <div class="info-value">{{ profile.fitnessGoals }}</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">
+          <mat-icon>location_on</mat-icon>
+        </div>
+        <div class="info-content">
+          <div class="info-label">Workout Locations</div>
+          <div class="info-value">{{ profile.workoutLocations }}</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">
+          <mat-icon>schedule</mat-icon>
+        </div>
+        <div class="info-content">
+          <div class="info-label">Workout Times</div>
+          <div class="info-value">{{ profile.workoutTimes }}</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">
+          <mat-icon>build</mat-icon>
+        </div>
+        <div class="info-content">
+          <div class="info-label">Available Equipment</div>
+          <div class="info-value">{{ profile.availableEquipment }}</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">
+          <mat-icon>medical_services</mat-icon>
+        </div>
+        <div class="info-content">
+          <div class="info-label">Health Conditions</div>
+          <div class="info-value">{{ profile.healthConditions }}</div>
+        </div>
+      </div>
+      <div class="info-item" *ngIf="profile.otherHealthCondition">
+        <div class="info-icon">
+          <mat-icon>info</mat-icon>
+        </div>
+        <div class="info-content">
+          <div class="info-label">Other Health Condition</div>
+          <div class="info-value">{{ profile.otherHealthCondition }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

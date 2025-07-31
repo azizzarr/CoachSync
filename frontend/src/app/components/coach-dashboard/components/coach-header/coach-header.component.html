@@ -1,0 +1,78 @@
+<div class="coach-header">
+  <div class="header-banner">
+    <div class="header-content">
+      <div class="profile-section">
+        <div class="profile-photo-container">
+          <div class="photo-wrapper">
+            <img 
+              [src]="profilePhotoUrl" 
+              alt="Coach Photo" 
+              class="profile-photo"
+              [class.loaded]="profilePhotoLoaded"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+              width="120"
+              height="120"
+            >
+            <button mat-icon-button class="edit-photo" (click)="onEditProfile()">
+              <fa-icon [icon]="faEdit"></fa-icon>
+            </button>
+          </div>
+        </div>
+        <div class="profile-info">
+          <div class="name-section">
+            <h1>{{coachInfo.name}}</h1>
+            <div class="coach-meta">
+              <span class="coach-id">
+                <fa-icon [icon]="faUserGroup" class="meta-icon"></fa-icon>
+                ID: {{coachInfo.id}}
+              </span>
+              <span class="rating-badge">
+                <fa-icon [icon]="faChartLine" class="rating-icon"></fa-icon>
+                Rating: {{coachInfo.rating}}
+              </span>
+            </div>
+          </div>
+          <div class="info-grid">
+            <div class="info-item">
+              <fa-icon [icon]="faCalendarDays" class="info-icon"></fa-icon>
+              <span>Coach since {{coachInfo.memberSince | date:'MMMM yyyy'}}</span>
+            </div>
+            <div class="info-item">
+              <fa-icon [icon]="faDumbbell" class="info-icon"></fa-icon>
+              <span>{{coachInfo.specialization}}</span>
+            </div>
+            <div class="info-item">
+              <fa-icon [icon]="faUserGroup" class="info-icon"></fa-icon>
+              <span>{{coachInfo.clientsCount}} Active Clients</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="actions-section">
+        <button mat-stroked-button class="action-button message" (click)="onMessage()">
+          <fa-icon [icon]="faMessage"></fa-icon>
+          <span>Messages</span>
+        </button>
+        <button mat-stroked-button class="action-button schedule" (click)="onSchedule()">
+          <fa-icon [icon]="faCalendarDays"></fa-icon>
+          <span>Schedule</span>
+        </button>
+        <button mat-icon-button [matMenuTriggerFor]="moreMenu" class="more-button">
+          <fa-icon [icon]="faEllipsisVertical"></fa-icon>
+        </button>
+        <mat-menu #moreMenu="matMenu">
+          <button mat-menu-item (click)="onEditProfile()">
+            <fa-icon [icon]="faEdit"></fa-icon>
+            <span>Edit Profile</span>
+          </button>
+          <button mat-menu-item (click)="onDownloadReport()">
+            <fa-icon [icon]="faDownload"></fa-icon>
+            <span>Download Report</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+  </div>
+</div> 

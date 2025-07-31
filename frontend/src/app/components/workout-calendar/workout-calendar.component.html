@@ -1,0 +1,343 @@
+<!-- Loading State -->
+<div class="loading-container" *ngIf="isLoading()">
+  <mat-spinner diameter="60" color="accent"></mat-spinner>
+  <h3>Loading your workout plan...</h3>
+</div>
+
+<!-- Error State -->
+<div class="error-container" *ngIf="error()">
+  <mat-icon class="error-icon">error_outline</mat-icon>
+  <h3>Error Loading Workout Plan</h3>
+  <p>{{ error() }}</p>
+  <button mat-raised-button color="primary" (click)="loadWorkoutPlan()">
+    <mat-icon>refresh</mat-icon>
+    Try Again
+  </button>
+</div>
+
+<!-- Main Content -->
+<div class="workout-calendar-container" *ngIf="!isLoading() && !error()">
+  <!-- Header Section with Professional Design -->
+  <div class="calendar-header">
+    <div class="header-content">
+      <div class="header-icon">
+        <mat-icon>fitness_center</mat-icon>
+      </div>
+      <div class="header-text">
+        <h1>Weekly Workout Plan</h1>
+        <p class="subtitle">7-day fitness program designed for optimal results</p>
+      </div>
+    </div>
+    
+    <div class="view-toggle">
+      <button mat-button [class.active]="currentView() === 'calendar'" (click)="toggleView('calendar')">
+        <mat-icon>calendar_month</mat-icon>
+        Calendar
+      </button>
+      <button mat-button [class.active]="currentView() === 'list'" (click)="toggleView('list')">
+        <mat-icon>view_list</mat-icon>
+        List
+      </button>
+    </div>
+  </div>
+
+  <!-- Stats Dashboard with Professional Design -->
+  <div class="stats-container">
+    <div class="stat-card">
+      <div class="stat-icon">
+        <mat-icon>fitness_center</mat-icon>
+      </div>
+      <div class="stat-content">
+        <div class="stat-value">{{ getTotalExercises() }}</div>
+        <div class="stat-label">Total Exercises</div>
+      </div>
+    </div>
+    
+    <div class="stat-card">
+      <div class="stat-icon">
+        <mat-icon>schedule</mat-icon>
+      </div>
+      <div class="stat-content">
+        <div class="stat-value">{{ getTotalWorkoutTime() }}</div>
+        <div class="stat-label">Minutes Per Week</div>
+      </div>
+    </div>
+    
+    <div class="stat-card">
+      <div class="stat-icon">
+        <mat-icon>local_fire_department</mat-icon>
+      </div>
+      <div class="stat-content">
+        <div class="stat-value">{{ getTotalCalories() }}</div>
+        <div class="stat-label">Calories Burned</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Area with Professional Layout -->
+  <div class="main-content">
+    <!-- Calendar View with Professional Design -->
+    <div class="calendar-view" *ngIf="currentView() === 'calendar'">
+      <div class="calendar-grid">
+        <div class="calendar-day" *ngFor="let day of workoutData.weeklySchedule" 
+             [class.selected]="selectedDay()?.day === day.day"
+             (click)="openWorkoutDetails(day)">
+          <div class="day-header" [style.background]="getWorkoutGradient(day.workoutType)">
+            <div class="day-name">{{ day.day }}</div>
+            <div class="workout-type">
+              <mat-icon>{{ getWorkoutIcon(day.workoutType) }}</mat-icon>
+              {{ day.workoutType }}
+            </div>
+          </div>
+          
+          <div class="day-content">
+            <div class="workout-summary">
+              <div class="workout-icon">
+                <mat-icon>{{ getWorkoutIcon(day.workoutType) }}</mat-icon>
+              </div>
+              
+              <div class="workout-details">
+                <div class="workout-duration" *ngIf="day.durationMinutes > 0">
+                  <mat-icon>schedule</mat-icon>
+                  {{ day.durationMinutes }} min
+                </div>
+                <div class="workout-calories" *ngIf="day.caloriesBurnt > 0">
+                  <mat-icon>local_fire_department</mat-icon>
+                  {{ day.caloriesBurnt }} cal
+                </div>
+                <div class="workout-exercises">
+                  <mat-icon>fitness_center</mat-icon>
+                  {{ day.exercises.length }} exercises
+                </div>
+              </div>
+            </div>
+            
+            <!-- Exercise Preview -->
+            <div class="exercise-preview" *ngIf="day.exercises.length > 0">
+              <div class="exercise-item" *ngFor="let exercise of day.exercises.slice(0, 2)">
+                <div class="exercise-name">
+                  <mat-icon class="exercise-icon">fitness_center</mat-icon>
+                  {{ exercise.name }}
+                </div>
+                <div class="exercise-sets-reps">
+                  <span class="sets">{{ exercise.sets }} sets</span>
+                  <span class="reps">{{ exercise.reps }} reps</span>
+                </div>
+              </div>
+              <div class="more-exercises" *ngIf="day.exercises.length > 2">
+                <mat-icon>add_circle</mat-icon>
+                +{{ day.exercises.length - 2 }} more
+              </div>
+            </div>
+          </div>
+          
+          <div class="day-footer">
+            <button mat-button class="view-details-btn" (click)="openWorkoutDetails(day); $event.stopPropagation()">
+              <mat-icon>visibility</mat-icon>
+              View Details
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- List View with Professional Design -->
+    <div class="list-view" *ngIf="currentView() === 'list'">
+      <mat-accordion>
+        <mat-expansion-panel *ngFor="let day of workoutData.weeklySchedule" 
+                            [expanded]="selectedDay()?.day === day.day"
+                            (opened)="selectDay(day)">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <div class="day-title">
+                <span class="day-name">{{ day.day }}</span>
+                <span class="workout-type" [style.color]="getWorkoutColor(day.workoutType)">
+                  <mat-icon>{{ getWorkoutIcon(day.workoutType) }}</mat-icon>
+                  {{ day.workoutType }}
+                </span>
+              </div>
+            </mat-panel-title>
+            <mat-panel-description>
+              <div class="day-summary">
+                <span *ngIf="day.durationMinutes > 0">
+                  <mat-icon>schedule</mat-icon>
+                  {{ day.durationMinutes }} min
+                </span>
+                <span *ngIf="day.caloriesBurnt > 0">
+                  <mat-icon>local_fire_department</mat-icon>
+                  {{ day.caloriesBurnt }} cal
+                </span>
+                <span>
+                  <mat-icon>fitness_center</mat-icon>
+                  {{ day.exercises.length }} exercises
+                </span>
+              </div>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          
+          <div class="day-notes" *ngIf="day.notes">
+            <div class="notes-header">
+              <mat-icon>info</mat-icon>
+              <h3>Workout Notes</h3>
+            </div>
+            <p>{{ day.notes }}</p>
+          </div>
+          
+          <div class="exercises-list" *ngIf="day.exercises.length > 0">
+            <div class="exercises-header">
+              <mat-icon>fitness_center</mat-icon>
+              <h3>Exercises</h3>
+            </div>
+            <div class="exercise-item" *ngFor="let exercise of day.exercises">
+              <div class="exercise-header">
+                <div class="exercise-title">
+                  <mat-icon class="exercise-icon">fitness_center</mat-icon>
+                  <h4>{{ exercise.name }}</h4>
+                </div>
+                <div class="exercise-meta">
+                  <span class="sets-reps">
+                    <mat-icon>repeat</mat-icon>
+                    {{ exercise.sets }} sets × {{ exercise.reps }} reps
+                  </span>
+                  <span class="rest-time" *ngIf="exercise.restSeconds > 0">
+                    <mat-icon>timer</mat-icon>
+                    {{ exercise.restSeconds }}s rest
+                  </span>
+                </div>
+              </div>
+              <div class="exercise-notes" *ngIf="exercise.notes">
+                <mat-icon>info</mat-icon>
+                <p>{{ exercise.notes }}</p>
+              </div>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+
+  <!-- Program Information with Professional Design -->
+  <div class="program-info">
+    <mat-tab-group>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>trending_up</mat-icon>
+          Progression Plan
+        </ng-template>
+        <div class="tab-content">
+          <div class="tab-header">
+            <mat-icon>trending_up</mat-icon>
+            <h3>Progression Plan</h3>
+          </div>
+          <p>{{ workoutData.progressionPlan }}</p>
+        </div>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>health_and_safety</mat-icon>
+          Safety Precautions
+        </ng-template>
+        <div class="tab-content">
+          <div class="tab-header">
+            <mat-icon>health_and_safety</mat-icon>
+            <h3>Safety Precautions</h3>
+          </div>
+          <p>{{ workoutData.safetyPrecautions }}</p>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>
+
+<!-- Workout Details Dialog -->
+<ng-template #workoutDetailsDialog>
+  <div class="workout-details-dialog" *ngIf="selectedDay()">
+    <div class="dialog-header" [style.background]="getWorkoutGradient(selectedDay()!.workoutType)">
+      <div class="dialog-title">
+        <div class="day-name">{{ selectedDay()!.day }}</div>
+        <div class="workout-type">
+          <mat-icon>{{ getWorkoutIcon(selectedDay()!.workoutType) }}</mat-icon>
+          {{ selectedDay()!.workoutType }}
+        </div>
+      </div>
+      <button mat-icon-button class="close-button" (click)="closeWorkoutDetails()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    
+    <div class="dialog-content">
+      <div class="workout-summary">
+        <div class="summary-item" *ngIf="selectedDay()!.durationMinutes > 0">
+          <div class="summary-icon">
+            <mat-icon>schedule</mat-icon>
+          </div>
+          <div class="summary-details">
+            <div class="summary-value">{{ selectedDay()!.durationMinutes }}</div>
+            <div class="summary-label">Minutes</div>
+          </div>
+        </div>
+        
+        <div class="summary-item" *ngIf="selectedDay()!.caloriesBurnt > 0">
+          <div class="summary-icon">
+            <mat-icon>local_fire_department</mat-icon>
+          </div>
+          <div class="summary-details">
+            <div class="summary-value">{{ selectedDay()!.caloriesBurnt }}</div>
+            <div class="summary-label">Calories</div>
+          </div>
+        </div>
+        
+        <div class="summary-item">
+          <div class="summary-icon">
+            <mat-icon>fitness_center</mat-icon>
+          </div>
+          <div class="summary-details">
+            <div class="summary-value">{{ selectedDay()!.exercises.length }}</div>
+            <div class="summary-label">Exercises</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="day-notes" *ngIf="selectedDay()!.notes">
+        <div class="notes-header">
+          <mat-icon>info</mat-icon>
+          <h3>Workout Notes</h3>
+        </div>
+        <p>{{ selectedDay()!.notes }}</p>
+      </div>
+      
+      <div class="exercises-list" *ngIf="selectedDay()!.exercises.length > 0">
+        <div class="exercises-header">
+          <mat-icon>fitness_center</mat-icon>
+          <h3>Exercises</h3>
+        </div>
+        <div class="exercise-item" *ngFor="let exercise of selectedDay()!.exercises">
+          <div class="exercise-header">
+            <div class="exercise-title">
+              <mat-icon class="exercise-icon">fitness_center</mat-icon>
+              <h4>{{ exercise.name }}</h4>
+            </div>
+            <div class="exercise-meta">
+              <span class="sets-reps">
+                <mat-icon>repeat</mat-icon>
+                {{ exercise.sets }} sets × {{ exercise.reps }} reps
+              </span>
+              <span class="rest-time" *ngIf="exercise.restSeconds > 0">
+                <mat-icon>timer</mat-icon>
+                {{ exercise.restSeconds }}s rest
+              </span>
+            </div>
+          </div>
+          <div class="exercise-notes" *ngIf="exercise.notes">
+            <mat-icon>info</mat-icon>
+            <p>{{ exercise.notes }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="dialog-actions">
+      <button mat-button (click)="closeWorkoutDetails()">Close</button>
+    </div>
+  </div>
+</ng-template>

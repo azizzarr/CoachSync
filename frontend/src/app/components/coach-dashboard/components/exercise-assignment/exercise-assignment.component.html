@@ -1,0 +1,154 @@
+<div class="exercise-assignment-container">
+  <app-coach-sidebar
+    (sidebarToggle)="onSidebarToggle($event)"
+    [isCollapsed]="isSidebarCollapsed">
+  </app-coach-sidebar>
+
+  <div class="main-content" [class.sidebar-collapsed]="isSidebarCollapsed">
+    <div class="assignment-content">
+      <div class="assignment-header">
+        <div class="header-content">
+          <h1>Exercise Assignment</h1>
+          <div class="subtitle">Create and manage workout assignments for your clients</div>
+        </div>
+        <div class="header-actions">
+          <button mat-stroked-button class="action-button" (click)="openQuickAssign()">
+            <mat-icon>add</mat-icon>
+            Quick Assign
+          </button>
+          <button mat-stroked-button class="action-button" (click)="openTemplateLibrary()">
+            <mat-icon>library_books</mat-icon>
+            Template Library
+          </button>
+        </div>
+      </div>
+
+      <div class="assignment-form">
+        <form [formGroup]="exerciseForm" (ngSubmit)="onSubmit()">
+          <div class="form-section">
+            <h2 class="section-title">Client Information</h2>
+            <div class="form-row">
+              <mat-form-field class="form-field">
+                <mat-label>Client</mat-label>
+                <mat-select formControlName="clientId">
+                  <mat-option value="client1">ahmed mrabet</mat-option>
+                  <mat-option value="client2">Jane Smith</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h2 class="section-title">Exercise Details</h2>
+            <div class="form-row">
+              <mat-form-field class="form-field">
+                <mat-label>Exercise</mat-label>
+                <mat-select formControlName="exerciseId" (selectionChange)="onExerciseSelect($event.value)">
+                  <mat-option *ngFor="let exercise of exercises" [value]="exercise.id">
+                    {{exercise.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <!-- Collapsible Exercise Preview -->
+            <div class="exercise-preview-collapsible" [class.expanded]="selectedExercise" [@expandCollapse]="selectedExercise ? 'expanded' : 'collapsed'">
+              <div class="preview-content" *ngIf="selectedExercise">
+                <div class="exercise-gif-container">
+                  <div class="tenor-gif-embed" 
+                       [attr.data-postid]="selectedExercise.id === '8' ? '27366492' : selectedExercise.gifUrl.split('-').pop()"
+                       data-share-method="host"
+                       data-aspect-ratio="1.50235"
+                       data-width="100%"
+                       [attr.data-id]="selectedExercise.id">
+                    <a [href]="selectedExercise.gifUrl">{{selectedExercise.name}} GIF</a>
+                  </div>
+                  <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+                </div>
+                <div class="exercise-details">
+                  <h3>{{selectedExercise.name}}</h3>
+                  <div class="detail-grid">
+                    <div class="detail-item">
+                      <mat-icon>fitness_center</mat-icon>
+                      <span>{{selectedExercise.target}}</span>
+                    </div>
+                    <div class="detail-item">
+                      <mat-icon>build</mat-icon>
+                      <span>{{selectedExercise.equipment}}</span>
+                    </div>
+                    <div class="detail-item">
+                      <mat-icon>accessibility</mat-icon>
+                      <span>{{selectedExercise.bodyPart}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <mat-form-field class="form-field">
+                <mat-label>Sets</mat-label>
+                <input matInput type="number" formControlName="sets">
+                <mat-error *ngIf="exerciseForm.get('sets')?.hasError('min')">
+                  Minimum 1 set
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="form-field">
+                <mat-label>Reps</mat-label>
+                <input matInput type="number" formControlName="reps">
+                <mat-error *ngIf="exerciseForm.get('reps')?.hasError('min')">
+                  Minimum 1 rep
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="form-field">
+                <mat-label>Rest Time (seconds)</mat-label>
+                <input matInput type="number" formControlName="restTime">
+                <mat-error *ngIf="exerciseForm.get('restTime')?.hasError('min')">
+                  Minimum 0 seconds
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-row">
+              <mat-form-field class="form-field">
+                <mat-label>Notes</mat-label>
+                <textarea matInput formControlName="notes" rows="3"></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h2 class="section-title">Schedule</h2>
+            <div class="form-row">
+              <mat-form-field class="form-field">
+                <mat-label>Start Date</mat-label>
+                <input matInput [matDatepicker]="startPicker" formControlName="startDate">
+                <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                <mat-datepicker #startPicker></mat-datepicker>
+              </mat-form-field>
+
+              <mat-form-field class="form-field">
+                <mat-label>End Date</mat-label>
+                <input matInput [matDatepicker]="endPicker" formControlName="endDate">
+                <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+                <mat-datepicker #endPicker></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button mat-stroked-button type="button" class="cancel-button" (click)="onCancel()">
+              Cancel
+            </button>
+            <button mat-flat-button type="submit" class="submit-button" [disabled]="isLoading">
+              <mat-spinner diameter="20" *ngIf="isLoading"></mat-spinner>
+              <span *ngIf="!isLoading">Assign Exercise</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div> 

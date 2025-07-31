@@ -1,0 +1,140 @@
+<!-- Header Section Begin -->
+<header class="header-section" [ngClass]="{'scrolled': isScrolled}">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="logo">
+                    <a routerLink="/">
+                        <img src="assets/img/CoachSync.png" alt="">
+                    </a>
+                </div>
+            </div>
+            <!-- Web Menu -->
+            <div class="col-lg-6 d-none d-lg-block">
+                <nav class="nav-menu">
+                    <ul>
+                        <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a></li>
+                        <li><a routerLink="/classes" routerLinkActive="active">Classes</a></li>
+                        <li><a routerLink="/services" routerLinkActive="active">Services</a></li>
+                        <li><a routerLink="/contact" routerLinkActive="active">Contact</a></li>
+                        <li><a routerLink="/workout-calendar" routerLinkActive="active">Workout Plan</a></li>
+                        <li><a href="#" (click)="onCoachDashboardClick($event)" class="coach-dashboard-link">Coach Dashboard</a></li>
+                        <li><a routerLink="/client-profile" routerLinkActive="active">My Profile</a></li>
+                        <li *ngIf="isLoggedIn"><a href="#" (click)="logout()" class="logout-link">Logout</a></li>
+                        <li *ngIf="!isLoggedIn"><a routerLink="/login" routerLinkActive="active">Login</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-lg-3">
+                <div class="top-option">
+                    <div class="to-social">
+                        <a href="#"><i class="fa fa-facebook"></i></a>
+                        <a href="#"><i class="fa fa-twitter"></i></a>
+                        <a href="#"><i class="fa fa-youtube-play"></i></a>
+                        <a href="#"><i class="fa fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu Button -->
+        <div class="canvas-open" (click)="toggleMobileMenu()">
+            <i class="fa fa-bars"></i>
+        </div>
+    </div>
+</header>
+<!-- Header End -->
+
+<!-- Mobile Menu Overlay -->
+<div class="mobile-menu-overlay" [ngClass]="{'active': isMobileMenuOpen}" (click)="toggleMobileMenu()"></div>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" [ngClass]="{'active': isMobileMenuOpen}">
+    <div class="mobile-menu-header">
+        <div class="logo">
+            <a routerLink="/" (click)="toggleMobileMenu()">
+                <img src="assets/img/CoachSync.png" alt="Logo">
+            </a>
+        </div>
+        <div class="mobile-menu-close" (click)="toggleMobileMenu()">
+            <i class="fa fa-times"></i>
+        </div>
+    </div>
+    <nav class="mobile-nav">
+        <ul>
+            <li>
+                <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="toggleMobileMenu()">
+                    <i class="fa fa-home"></i>
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a routerLink="/client-profile" routerLinkActive="active" (click)="toggleMobileMenu()">
+                    <i class="fa fa-user"></i>
+                    <span>My Profile</span>
+                </a>
+            </li>
+            <li>
+                <a routerLink="/classes" routerLinkActive="active" (click)="toggleMobileMenu()">
+                    <i class="fa fa-dumbbell"></i>
+                    <span>Classes</span>
+                </a>
+            </li>
+            <li>
+                <a routerLink="/services" routerLinkActive="active" (click)="toggleMobileMenu()">
+                    <i class="fa fa-cogs"></i>
+                    <span>Services</span>
+                </a>
+            </li>
+           <!-- <li>
+                <a routerLink="/team" routerLinkActive="active" (click)="toggleMobileMenu()">
+                    <i class="fa fa-users"></i>
+                    <span>Our Team</span>
+                </a>
+            </li>-->
+            <li>
+                <a routerLink="/contact" routerLinkActive="active" (click)="toggleMobileMenu()">
+                    <i class="fa fa-envelope"></i>
+                    <span>Contact</span>
+                </a>
+            </li>
+            <li>
+                <a routerLink="/workout-calendar" routerLinkActive="active" (click)="toggleMobileMenu()">
+                    <i class="fa fa-calendar-alt"></i>
+                    <span>Workout Plan</span>
+                </a>
+            </li>
+            <li class="coach-dashboard-link">
+                <a href="#" (click)="onCoachDashboardClick($event)">
+                    <i class="fa fa-chart-line"></i>
+                    <span>Coach Dashboard</span>
+                </a>
+            </li>
+            <li *ngIf="isLoggedIn">
+                <a href="#" (click)="logout()" class="logout-link">
+                    <i class="fa fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+            <li *ngIf="!isLoggedIn">
+                <a routerLink="/login" routerLinkActive="active" (click)="toggleMobileMenu()">
+                    <i class="fa fa-sign-in-alt"></i>
+                    <span>Login</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <div class="mobile-social">
+        <a href="#" aria-label="Facebook">
+            <i class="fa fa-facebook"></i>
+        </a>
+        <a href="#" aria-label="Twitter">
+            <i class="fa fa-twitter"></i>
+        </a>
+        <a href="#" aria-label="YouTube">
+            <i class="fa fa-youtube-play"></i>
+        </a>
+        <a href="#" aria-label="Instagram">
+            <i class="fa fa-instagram"></i>
+        </a>
+    </div>
+</div>

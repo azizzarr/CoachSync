@@ -1,0 +1,2138 @@
+@use '@angular/material' as mat;
+
+// === GYM DARK THEME COLORS ===
+$gym-bg: #181a1b;
+$gym-card: #23272a;
+$gym-header: linear-gradient(135deg, #23272a 60%, #181a1b 100%);
+$gym-orange: #ff6b1c;
+$gym-orange-light: #ff914d;
+$gym-text: #f5f5f5;
+$gym-text-secondary: #bdbdbd;
+$gym-border: #282c34;
+$gym-shadow: 0 2px 8px rgba(0,0,0,0.7);
+
+.workout-calendar-container {
+  padding: 2rem;
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  font-family: 'Inter', 'Roboto', sans-serif;
+  color: $gym-text;
+  background-color: $gym-bg;
+  border-radius: 0;
+  box-shadow: none;
+  backdrop-filter: blur(10px);
+  border: none;
+  display: flex;
+  flex-direction: column;
+}
+
+// Header Section
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 1.75rem;
+  background: $gym-header;
+  color: $gym-text;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none"/><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.05)"/></svg>') repeat;
+    opacity: 0.5;
+    z-index: 0;
+  }
+
+  .header-content {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    position: relative;
+    z-index: 1;
+
+    .header-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      height: 60px;
+      background-color: rgba(255,255,255,0.08);
+      border-radius: 16px;
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      mat-icon {
+        font-size: 28px;
+        color: $gym-orange;
+      }
+    }
+
+    .header-text {
+      h1 {
+        margin: 0;
+        font-size: 2.2rem;
+        font-weight: 600;
+        letter-spacing: -0.5px;
+        background: linear-gradient(to right, #ffffff, #e2e8f0);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .subtitle {
+        margin: 0.5rem 0 0;
+        font-size: 1.1rem;
+        opacity: 0.9;
+        font-weight: 400;
+      }
+    }
+  }
+
+  .view-toggle {
+    display: flex;
+    gap: 0.75rem;
+    position: relative;
+    z-index: 1;
+
+    button {
+      background-color: rgba(255,255,255,0.08);
+      color: $gym-orange;
+      border-radius: 12px;
+      padding: 0.6rem 1.25rem;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255,255,255,0.1);
+      font-weight: 500;
+
+      &:hover {
+        background: $gym-orange-light;
+        color: $gym-bg;
+      }
+
+      &.active {
+        background: $gym-orange;
+        color: $gym-bg;
+        font-weight: 600;
+        box-shadow: 0 4px 12px rgba(255,107,28,0.2);
+      }
+
+      mat-icon {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+}
+
+// Stats Cards
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.75rem;
+  margin-bottom: 2.5rem;
+
+  .stat-card {
+    display: flex;
+    align-items: center;
+    padding: 1.75rem;
+    background-color: $gym-card;
+    color: $gym-text;
+    border-radius: 16px;
+    box-shadow: $gym-shadow;
+    border: 1px solid $gym-border;
+    position: relative;
+    overflow: hidden;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, $gym-orange, $gym-orange-light);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    &:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.10);
+      
+      &::before {
+        opacity: 1;
+      }
+    }
+
+    .stat-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, $gym-orange 60%, $gym-orange-light 100%);
+      margin-right: 1.5rem;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15);
+
+      mat-icon {
+        font-size: 28px;
+        color: $gym-bg;
+      }
+    }
+
+    .stat-content {
+      .stat-value {
+        font-size: 2.2rem;
+        font-weight: 600;
+        color: $gym-text;
+        margin-bottom: 0.25rem;
+        background: linear-gradient(90deg, $gym-orange, $gym-orange-light);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .stat-label {
+        font-size: 0.95rem;
+        color: $gym-text-secondary;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+// Main Content Area
+.main-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+
+  @media (min-width: 1200px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Calendar View
+.calendar-view {
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.75rem;
+  }
+
+  .calendar-day {
+    background-color: $gym-card;
+    color: $gym-text;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: $gym-shadow;
+    transition: box-shadow 0.2s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid $gym-border;
+    position: relative;
+
+    &:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.10);
+    }
+
+    &.selected {
+      border: 2px solid $gym-orange;
+      box-shadow: 0 0 0 4px rgba(255, 107, 28, 0.1);
+    }
+
+    &.expanded {
+      grid-column: span 1;
+      
+      @media (min-width: 768px) {
+        grid-column: span 2;
+      }
+      
+      @media (min-width: 1200px) {
+        grid-column: span 3;
+      }
+      
+      .day-content {
+        flex: 1;
+      }
+      
+      .day-footer {
+        opacity: 1;
+      }
+    }
+
+    .day-header {
+      padding: 1.25rem;
+      color: $gym-bg;
+      font-weight: 500;
+      position: relative;
+      overflow: hidden;
+      
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, $gym-orange 60%, $gym-orange-light 100%);
+        z-index: 0;
+      }
+      
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none"/><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.05)"/></svg>') repeat;
+        opacity: 0.3;
+        z-index: 1;
+      }
+
+      .day-name {
+        font-size: 1.3rem;
+        margin-bottom: 0.5rem;
+        position: relative;
+        z-index: 2;
+        font-weight: 600;
+        color: $gym-bg;
+      }
+
+      .workout-type {
+        font-size: 0.95rem;
+        opacity: 0.9;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        position: relative;
+        z-index: 2;
+        color: $gym-bg;
+
+        mat-icon {
+          font-size: 18px;
+          color: $gym-bg;
+        }
+      }
+    }
+
+    .day-content {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+
+      .workout-summary {
+        display: flex;
+        margin-bottom: 1.25rem;
+
+        .workout-icon {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 54px;
+          height: 54px;
+          border-radius: 12px;
+          background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+          margin-right: 1.25rem;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+
+          mat-icon {
+            font-size: 24px;
+            color: $gym-orange;
+          }
+        }
+
+        .workout-details {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          gap: 0.5rem;
+          font-size: 0.95rem;
+          color: $gym-text-secondary;
+
+          mat-icon {
+            font-size: 18px;
+            margin-right: 0.25rem;
+            vertical-align: middle;
+            color: $gym-orange;
+          }
+        }
+      }
+
+      // Expanded Details
+      .expanded-details {
+        margin-top: 1rem;
+        border-top: 1px solid $gym-border;
+        padding-top: 1rem;
+        
+        .day-notes {
+          margin-bottom: 1.5rem;
+          padding: 1rem;
+          background-color: $gym-card;
+          border-radius: 8px;
+          
+          .notes-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            
+            mat-icon {
+              color: $gym-orange;
+            }
+            
+            h3 {
+              margin: 0;
+              font-size: 1.1rem;
+              font-weight: 500;
+              color: $gym-text;
+            }
+          }
+          
+          p {
+            margin: 0;
+            font-size: 0.95rem;
+            color: $gym-text-secondary;
+            line-height: 1.6;
+          }
+        }
+        
+        .exercises-list {
+          .exercises-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+            
+            mat-icon {
+              color: $gym-orange;
+            }
+            
+            h3 {
+              margin: 0;
+              font-size: 1.1rem;
+              font-weight: 500;
+              color: $gym-text;
+            }
+          }
+          
+          .exercise-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid $gym-border;
+            
+            &:last-child {
+              margin-bottom: 0;
+              padding-bottom: 0;
+              border-bottom: none;
+            }
+            
+            .exercise-header {
+              margin-bottom: 1rem;
+              
+              .exercise-title {
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                margin-bottom: 0.75rem;
+                
+                .exercise-icon {
+                  color: $gym-orange;
+                }
+                
+                h4 {
+                  margin: 0;
+                  font-size: 1.1rem;
+                  font-weight: 500;
+                  color: $gym-text;
+                }
+              }
+              
+              .exercise-meta {
+                display: flex;
+                gap: 1.25rem;
+                font-size: 0.95rem;
+                color: $gym-text-secondary;
+                
+                .sets-reps, .rest-time {
+                  display: flex;
+                  align-items: center;
+                  gap: 0.5rem;
+                  background-color: $gym-bg;
+                  padding: 0.75rem 1.25rem;
+                  border-radius: 12px;
+                  font-weight: 500;
+                  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+                  border: 1px solid $gym-border;
+                  
+                  mat-icon {
+                    font-size: 20px;
+                    color: $gym-orange;
+                  }
+                }
+              }
+            }
+            
+            .exercise-notes {
+              display: flex;
+              gap: 0.75rem;
+              padding: 1rem;
+              background-color: $gym-card;
+              border-radius: 8px;
+              font-size: 0.95rem;
+              color: $gym-text-secondary;
+              
+              mat-icon {
+                color: $gym-orange;
+                margin-top: 0.25rem;
+              }
+              
+              p {
+                margin: 0;
+                line-height: 1.6;
+              }
+            }
+          }
+        }
+      }
+
+      .exercise-preview {
+        .exercise-item {
+          display: flex;
+          justify-content: space-between;
+          padding: 0.5rem 0;
+          border-bottom: 1px solid $gym-border;
+
+          &:last-child {
+            border-bottom: none;
+          }
+
+          .exercise-name {
+            font-weight: 500;
+            color: $gym-text;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+
+            .exercise-icon {
+              font-size: 18px;
+              color: $gym-text-secondary;
+            }
+          }
+
+          .exercise-sets-reps {
+            display: flex;
+            gap: 0.75rem;
+            color: $gym-text-secondary;
+            font-size: 0.9rem;
+
+            .sets, .reps {
+              background-color: $gym-bg;
+              padding: 0.25rem 0.5rem;
+              border-radius: 4px;
+              font-weight: 500;
+              border: 1px solid $gym-border;
+            }
+          }
+        }
+
+        .more-exercises {
+          text-align: center;
+          padding: 0.5rem 0;
+          color: $gym-orange;
+          font-size: 0.9rem;
+          font-weight: 500;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+          margin-top: 0.5rem;
+          background-color: $gym-card;
+          border-radius: 6px;
+          transition: all 0.3s ease;
+
+          &:hover {
+            background-color: $gym-border;
+          }
+
+          mat-icon {
+            font-size: 18px;
+          }
+        }
+      }
+    }
+
+    .day-footer {
+      padding: 1rem 1.5rem;
+      background-color: $gym-bg;
+      display: flex;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      border-top: 1px solid $gym-border;
+
+      .view-details-btn {
+        color: $gym-orange;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: color 0.2s ease;
+        
+        &:hover {
+          color: $gym-orange-light;
+        }
+
+        mat-icon {
+          font-size: 18px;
+        }
+      }
+    }
+    
+    &:hover .day-footer {
+      opacity: 1;
+    }
+  }
+}
+
+// List View
+.list-view {
+  mat-accordion {
+    display: block;
+    width: 100%;
+  }
+
+  mat-expansion-panel {
+    margin-bottom: 1rem;
+    border-radius: 12px !important;
+    box-shadow: $gym-shadow !important;
+    overflow: hidden;
+    background-color: $gym-card !important;
+    color: $gym-text;
+    transition: box-shadow 0.2s ease;
+
+    &:hover {
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    mat-expansion-panel-header {
+      padding: 1rem 1.5rem;
+      color: $gym-text !important;
+    }
+
+    .day-title {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      .day-name {
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: $gym-text;
+      }
+
+      .workout-type {
+        font-size: 0.9rem;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: $gym-text;
+
+        mat-icon {
+          font-size: 18px;
+          color: $gym-orange;
+        }
+      }
+    }
+
+    .day-summary {
+      display: flex;
+      gap: 1rem;
+      color: $gym-text-secondary;
+      font-size: 0.9rem;
+
+      span {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        mat-icon {
+          font-size: 18px;
+          color: $gym-orange-light;
+        }
+      }
+    }
+
+    .day-notes {
+      margin: 1rem 0;
+      padding: 1rem;
+      background-color: $gym-card;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: $gym-text-secondary;
+
+      .notes-header {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 0.75rem;
+
+        mat-icon {
+          color: $gym-orange;
+          font-size: 28px;
+          background: linear-gradient(135deg, $gym-orange 60%, $gym-orange-light 100%);
+          padding: 10px;
+          border-radius: 12px;
+          box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15);
+        }
+
+        h3 {
+          margin: 0;
+          font-size: 1.1rem;
+          font-weight: 500;
+          color: $gym-text;
+        }
+      }
+
+      p {
+        margin: 0;
+        line-height: 1.6;
+      }
+    }
+
+    .exercises-list {
+      .exercises-header {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1.25rem;
+
+        mat-icon {
+          color: $gym-orange;
+          font-size: 28px;
+          background: linear-gradient(135deg, $gym-orange 60%, $gym-orange-light 100%);
+          padding: 10px;
+          border-radius: 12px;
+          box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15);
+        }
+
+        h3 {
+          margin: 0;
+          font-size: 1.4rem;
+          font-weight: 600;
+          color: $gym-text;
+        }
+      }
+
+      .exercise-item {
+        margin-bottom: 3rem;
+        padding-bottom: 3rem;
+        border-bottom: 1px solid $gym-border;
+        
+        &:last-child {
+          margin-bottom: 0;
+          padding-bottom: 0;
+          border-bottom: none;
+        }
+        
+        .exercise-header {
+          margin-bottom: 1.75rem;
+          
+          .exercise-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+            
+            .exercise-icon {
+              color: $gym-orange;
+              font-size: 28px;
+              background: linear-gradient(135deg, $gym-orange 60%, $gym-orange-light 100%);
+              padding: 10px;
+              border-radius: 12px;
+              box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15);
+            }
+            
+            h4 {
+              margin: 0;
+              font-size: 1.5rem;
+              font-weight: 600;
+              color: $gym-text;
+              position: relative;
+              
+              &::after {
+                content: '';
+                position: absolute;
+                bottom: -5px;
+                left: 0;
+                width: 40px;
+                height: 3px;
+                background: linear-gradient(90deg, $gym-orange, $gym-orange-light);
+                border-radius: 3px;
+              }
+            }
+          }
+          
+          .exercise-meta {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 1.1rem;
+            color: $gym-text-secondary;
+            
+            .sets-reps, .rest-time {
+              display: flex;
+              align-items: center;
+              gap: 0.75rem;
+              background-color: $gym-bg;
+              padding: 0.75rem 1.25rem;
+              border-radius: 12px;
+              font-weight: 500;
+              box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+              border: 1px solid $gym-border;
+              
+              mat-icon {
+                font-size: 20px;
+                color: $gym-orange;
+              }
+            }
+          }
+        }
+        
+        .exercise-notes {
+          display: flex;
+          gap: 1.25rem;
+          padding: 1.75rem;
+          background-color: $gym-card;
+          border-radius: 16px;
+          font-size: 1.1rem;
+          color: $gym-text-secondary;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          border: 1px solid $gym-border;
+          
+          mat-icon {
+            color: $gym-orange;
+            margin-top: 0.25rem;
+            font-size: 22px;
+            background: linear-gradient(135deg, $gym-orange 60%, $gym-orange-light 100%);
+            padding: 8px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          }
+          
+          p {
+            margin: 0;
+            line-height: 1.7;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Selected Day Details
+.selected-day-details {
+  background-color: $gym-card;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: $gym-shadow;
+
+  .details-header {
+    padding: 1.5rem;
+    color: $gym-bg;
+    position: relative;
+    background: linear-gradient(135deg, $gym-orange 60%, $gym-orange-light 100%);
+
+    .details-title {
+      .details-title-main {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.25rem;
+
+        .details-icon {
+          font-size: 28px;
+          color: $gym-bg;
+        }
+
+        h2 {
+          margin: 0;
+          font-size: 1.5rem;
+          font-weight: 500;
+          color: $gym-bg;
+        }
+      }
+
+      .details-meta {
+        display: flex;
+        gap: 1.5rem;
+        font-size: 0.95rem;
+
+        span {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          background-color: rgba(255, 255, 255, 0.2);
+          padding: 0.5rem 0.75rem;
+          border-radius: 8px;
+          color: $gym-bg;
+
+          mat-icon {
+            font-size: 18px;
+            color: $gym-bg;
+          }
+        }
+      }
+    }
+
+    .close-button {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      color: $gym-bg;
+      background-color: rgba(248, 247, 247, 0.971);
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+      }
+    }
+  }
+
+  .details-content {
+    padding: 1.5rem;
+    background-color: $gym-card;
+    color: $gym-text;
+
+    .day-notes {
+      margin-bottom: 2rem;
+      padding: 1rem;
+      background-color: $gym-bg;
+      border-radius: 8px;
+      border: 1px solid $gym-border;
+
+      .notes-header {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 0.75rem;
+
+        mat-icon {
+          color: $gym-orange;
+        }
+
+        h3 {
+          margin: 0;
+          font-size: 1.1rem;
+          font-weight: 500;
+          color: $gym-text;
+        }
+      }
+
+      p {
+        margin: 0;
+        font-size: 0.95rem;
+        color: $gym-text-secondary;
+        line-height: 1.6;
+      }
+    }
+
+    .exercises-list {
+      .exercises-header {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1.25rem;
+
+        mat-icon {
+          color: $gym-orange;
+        }
+
+        h3 {
+          margin: 0;
+          font-size: 1.2rem;
+          font-weight: 500;
+          color: $gym-text;
+        }
+      }
+
+      .exercise-item {
+        margin-bottom: 1.5rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid $gym-border;
+
+        &:last-child {
+          margin-bottom: 0;
+          padding-bottom: 0;
+          border-bottom: none;
+        }
+
+        .exercise-header {
+          margin-bottom: 1rem;
+
+          .exercise-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+
+            .exercise-icon {
+              color: $gym-orange;
+            }
+
+            h4 {
+              margin: 0;
+              font-size: 1.1rem;
+              font-weight: 500;
+              color: $gym-text;
+            }
+          }
+
+          .exercise-meta {
+            display: flex;
+            gap: 1.25rem;
+            font-size: 0.95rem;
+            color: $gym-text-secondary;
+
+            .sets-reps, .rest-time {
+              display: flex;
+              align-items: center;
+              gap: 0.5rem;
+              background-color: $gym-bg;
+              padding: 0.5rem 0.75rem;
+              border-radius: 8px;
+              font-weight: 500;
+              border: 1px solid $gym-border;
+
+              mat-icon {
+                font-size: 18px;
+                color: $gym-orange;
+              }
+            }
+          }
+        }
+
+        .exercise-notes {
+          display: flex;
+          gap: 0.75rem;
+          padding: 1rem;
+          background-color: $gym-bg;
+          border-radius: 8px;
+          font-size: 0.95rem;
+          color: $gym-text-secondary;
+          border: 1px solid $gym-border;
+
+          mat-icon {
+            color: $gym-orange;
+            margin-top: 0.25rem;
+          }
+
+          p {
+            margin: 0;
+            line-height: 1.6;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Program Information
+.program-info {
+  background-color: $gym-card;
+  color: $gym-text;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: $gym-shadow;
+
+  ::ng-deep {
+    .mat-mdc-tab-header {
+      background-color: #f5f5f5;
+    }
+
+    .mat-mdc-tab {
+      font-weight: 500;
+      padding: 0 1.5rem;
+      height: 56px;
+
+      .mat-mdc-tab-label-content {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+
+        mat-icon {
+          font-size: 20px;
+        }
+      }
+    }
+
+    .mat-mdc-tab-body-content {
+      padding: 1.5rem;
+    }
+  }
+
+  .tab-content {
+    .tab-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+
+      mat-icon {
+        color: $gym-orange;
+        font-size: 24px;
+      }
+
+      h3 {
+        margin: 0;
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: $gym-text;
+      }
+    }
+
+    p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: $gym-text-secondary;
+      line-height: 1.6;
+    }
+  }
+}
+
+// Workout Details Dialog Container
+::ng-deep .workout-details-dialog-container {
+  .mat-mdc-dialog-container {
+    padding: 0;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    background-color: $gym-card;
+    color: $gym-text;
+  }
+  
+  .mat-mdc-dialog-surface {
+    padding: 0;
+    border-radius: 24px;
+    overflow: hidden;
+  }
+  
+  .mat-mdc-dialog-backdrop {
+    background-color: rgba(0, 0, 0, 0.25);
+  }
+  
+  .cdk-overlay-backdrop,
+  .cdk-overlay-dark-backdrop {
+    background-color: rgba(0, 0, 0, 0.25) !important;
+  }
+  
+  .cdk-overlay-pane {
+    max-width: 95vw !important;
+    max-height: 90vh !important;
+  }
+  
+  .cdk-overlay-container .cdk-overlay-backdrop {
+    background-color: rgba(0, 0, 0, 0.25) !important;
+  }
+
+  .mat-icon {
+    font-family: 'Material Icons' !important;
+    font-weight: normal !important;
+    font-style: normal !important;
+    font-size: 24px !important;
+    line-height: 1 !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+    display: inline-block !important;
+    white-space: nowrap !important;
+    word-wrap: normal !important;
+    direction: ltr !important;
+    -webkit-font-feature-settings: 'liga' !important;
+    -webkit-font-smoothing: antialiased !important;
+  }
+}
+
+// Custom backdrop class for consistent blur effect
+::ng-deep .workout-details-backdrop {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  
+  &.cdk-overlay-backdrop {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+  }
+  
+  &.cdk-overlay-dark-backdrop {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+  }
+}
+
+// Workout Details Dialog
+.workout-details-dialog {
+  display: flex;
+  flex-direction: column;
+  max-width: 900px;
+  width: 100%;
+  max-height: 90vh;
+  overflow: hidden;
+  border-radius: 24px;
+  background-color: $gym-card;
+  color: $gym-text;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.8);
+  
+  .dialog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2.5rem;
+    color: $gym-bg;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: overlay;
+    background: linear-gradient(135deg, $gym-orange 60%, $gym-orange-light 100%);
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(255, 107, 28, 0.9), rgba(255, 145, 77, 0.8));
+      z-index: 0;
+    }
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.05);
+      opacity: 0.3;
+      z-index: 1;
+    }
+    
+    .dialog-title {
+      position: relative;
+      z-index: 2;
+      
+      .day-name {
+        font-size: 2.4rem;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+        letter-spacing: -0.5px;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        color: $gym-bg;
+        -webkit-text-fill-color: $gym-bg;
+      }
+      
+      .workout-type {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 1.3rem;
+        opacity: 0.95;
+        font-weight: 500;
+        
+        mat-icon {
+          font-size: 24px;
+          filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+          color: $gym-bg;
+        }
+      }
+    }
+    
+    .close-button {
+      position: relative;
+      z-index: 2;
+      color: white;
+      background-color: rgba(255,255,255,0.15);
+      transition: background-color 0.2s ease;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255,255,255,0.2);
+      
+      &:hover {
+        background-color: rgba(255,255,255,0.25);
+      }
+      
+      mat-icon {
+        font-size: 20px;
+      }
+    }
+  }
+  
+  .dialog-content {
+    padding: 2.5rem;
+    overflow-y: auto;
+    flex: 1;
+    background-color: $gym-bg;
+    
+    .workout-summary {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.75rem;
+      margin-bottom: 3rem;
+      
+      .summary-item {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        padding: 1.75rem;
+        background-color: $gym-card;
+        border-radius: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        border: 1px solid $gym-border;
+        position: relative;
+        overflow: hidden;
+        
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 4px;
+          background: linear-gradient(90deg, $gym-orange, $gym-orange-light);
+          opacity: 0;
+          transition: opacity 0.2s ease;
+        }
+        
+        &:hover {
+          box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+          
+          &::before {
+            opacity: 1;
+          }
+        }
+        
+        .summary-icon {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 64px;
+          height: 64px;
+          border-radius: 20px;
+          background: linear-gradient(135deg, $gym-orange 60%, $gym-orange-light 100%);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          
+          mat-icon {
+            font-size: 28px;
+            color: $gym-bg;
+          }
+        }
+        
+        .summary-details {
+          .summary-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: $gym-text;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(90deg, $gym-orange, $gym-orange-light);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+          }
+          
+          .summary-label {
+            font-size: 1rem;
+            color: $gym-text-secondary;
+            font-weight: 500;
+          }
+        }
+      }
+    }
+    
+    .day-notes {
+      margin-bottom: 3rem;
+      padding: 1.75rem;
+      background-color: $gym-card;
+      border-radius: 16px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border: 1px solid $gym-border;
+      
+      .notes-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.25rem;
+        
+        mat-icon {
+          color: $gym-orange;
+          font-size: 28px;
+          background: linear-gradient(135deg, $gym-orange 60%, $gym-orange-light 100%);
+          padding: 10px;
+          border-radius: 12px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        h3 {
+          margin: 0;
+          font-size: 1.4rem;
+          font-weight: 600;
+          color: $gym-text;
+        }
+      }
+      
+      p {
+        margin: 0;
+        font-size: 1.1rem;
+        color: $gym-text-secondary;
+        line-height: 1.7;
+      }
+    }
+    
+    .exercises-list {
+      .exercises-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        
+        mat-icon {
+          color: $gym-orange;
+          font-size: 28px;
+          background: linear-gradient(135deg, $gym-orange 60%, $gym-orange-light 100%);
+          padding: 10px;
+          border-radius: 12px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        h3 {
+          margin: 0;
+          font-size: 1.4rem;
+          font-weight: 600;
+          color: $gym-text;
+        }
+      }
+      
+      .exercise-item {
+        margin-bottom: 3rem;
+        padding-bottom: 3rem;
+        border-bottom: 1px solid $gym-border;
+        
+        &:last-child {
+          margin-bottom: 0;
+          padding-bottom: 0;
+          border-bottom: none;
+        }
+        
+        .exercise-header {
+          margin-bottom: 1.75rem;
+          
+          .exercise-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+            
+            .exercise-icon {
+              color: $gym-orange;
+              font-size: 28px;
+              background: linear-gradient(135deg, $gym-orange 60%, $gym-orange-light 100%);
+              padding: 10px;
+              border-radius: 12px;
+              box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            }
+            
+            h4 {
+              margin: 0;
+              font-size: 1.5rem;
+              font-weight: 600;
+              color: $gym-text;
+              position: relative;
+              
+              &::after {
+                content: '';
+                position: absolute;
+                bottom: -5px;
+                left: 0;
+                width: 40px;
+                height: 3px;
+                background: linear-gradient(90deg, $gym-orange, $gym-orange-light);
+                border-radius: 3px;
+              }
+            }
+          }
+          
+          .exercise-meta {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 1.1rem;
+            color: $gym-text-secondary;
+            
+            .sets-reps, .rest-time {
+              display: flex;
+              align-items: center;
+              gap: 0.75rem;
+              background-color: $gym-bg;
+              padding: 0.75rem 1.25rem;
+              border-radius: 12px;
+              font-weight: 500;
+              box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+              border: 1px solid $gym-border;
+              
+              mat-icon {
+                font-size: 20px;
+                color: $gym-orange;
+              }
+            }
+          }
+        }
+        
+        .exercise-notes {
+          display: flex;
+          gap: 1.25rem;
+          padding: 1.75rem;
+          background-color: $gym-card;
+          border-radius: 16px;
+          font-size: 1.1rem;
+          color: $gym-text-secondary;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          border: 1px solid $gym-border;
+          
+          mat-icon {
+            color: $gym-orange;
+            margin-top: 0.25rem;
+            font-size: 22px;
+            background: linear-gradient(135deg, $gym-orange 60%, $gym-orange-light 100%);
+            padding: 8px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          }
+          
+          p {
+            margin: 0;
+            line-height: 1.7;
+          }
+        }
+      }
+    }
+  }
+  
+  .dialog-actions {
+    padding: 1.5rem 2.5rem;
+    display: flex;
+    justify-content: flex-end;
+    background-color: $gym-card;
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+    
+    button {
+      padding: 0.75rem 1.5rem;
+      border-radius: 12px;
+      font-weight: 500;
+      transition: box-shadow 0.2s ease;
+      
+      &:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+}
+
+// Responsive Adjustments
+@media (max-width: 1200px) {
+  .workout-calendar-container {
+    padding: 1.5rem;
+  }
+  
+  .calendar-view .calendar-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+  
+  .workout-details-dialog {
+    max-width: 95vw;
+    
+    .dialog-content {
+      .workout-summary {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .calendar-header {
+    .header-content {
+      .header-text {
+        h1 {
+          font-size: 1.8rem;
+        }
+      }
+    }
+  }
+  
+  .stats-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .workout-details-dialog {
+    .dialog-header {
+      padding: 1.75rem;
+      
+      .dialog-title {
+        .day-name {
+          font-size: 2rem;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .workout-calendar-container {
+    padding: 1rem;
+  }
+
+  .calendar-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+    padding: 1.25rem;
+
+    .header-content {
+      .header-icon {
+        width: 48px;
+        height: 48px;
+
+        mat-icon {
+          font-size: 24px;
+        }
+      }
+
+      .header-text {
+        h1 {
+          font-size: 1.6rem;
+        }
+        
+        .subtitle {
+          font-size: 0.9rem;
+        }
+      }
+    }
+
+    .view-toggle {
+      width: 100%;
+      justify-content: space-between;
+      
+      button {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  .stats-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    
+    .stat-card {
+      padding: 1.25rem;
+      
+      .stat-icon {
+        width: 50px;
+        height: 50px;
+        margin-right: 1rem;
+        
+        mat-icon {
+          font-size: 24px;
+        }
+      }
+      
+      .stat-content {
+        .stat-value {
+          font-size: 1.8rem;
+        }
+      }
+    }
+  }
+
+  .main-content {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .calendar-view .calendar-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .calendar-day {
+    .day-header {
+      padding: 0.75rem;
+      
+      .day-name {
+        font-size: 1.1rem;
+      }
+    }
+    
+    .day-content {
+      padding: 1rem;
+      
+      .workout-summary {
+        .workout-icon {
+          width: 40px;
+          height: 40px;
+          
+          mat-icon {
+            font-size: 20px;
+          }
+        }
+        
+        .workout-details {
+          font-size: 0.85rem;
+        }
+      }
+    }
+  }
+  
+  .list-view {
+    mat-expansion-panel {
+      mat-expansion-panel-header {
+        padding: 0.75rem 1rem;
+      }
+      
+      .day-title {
+        .day-name {
+          font-size: 1rem;
+        }
+      }
+      
+      .day-summary {
+        font-size: 0.85rem;
+      }
+    }
+  }
+  
+  .workout-details-dialog {
+    max-width: 95vw;
+    border-radius: 24px;
+    
+    .dialog-header {
+      padding: 1.75rem;
+      border-top-left-radius: 24px;
+      border-top-right-radius: 24px;
+      
+      .dialog-title {
+        .day-name {
+          font-size: 1.8rem;
+        }
+        
+        .workout-type {
+          font-size: 1.1rem;
+        }
+      }
+    }
+    
+    .dialog-content {
+      padding: 1.75rem;
+      
+      .workout-summary {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+        margin-bottom: 2rem;
+      }
+      
+      .summary-item {
+        padding: 1.5rem;
+        border-radius: 20px;
+        
+        .summary-icon {
+          width: 50px;
+          height: 50px;
+          border-radius: 16px;
+          
+          mat-icon {
+            font-size: 24px;
+          }
+        }
+        
+        .summary-details {
+          .summary-value {
+            font-size: 1.8rem;
+          }
+          
+          .summary-label {
+            font-size: 0.95rem;
+          }
+        }
+      }
+      
+      .day-notes, .exercise-item .exercise-notes {
+        padding: 1.25rem;
+        border-radius: 20px;
+      }
+      
+      .exercise-item {
+        border-radius: 20px;
+        
+        .exercise-header {
+          .exercise-title {
+            h4 {
+              font-size: 1.3rem;
+            }
+          }
+        }
+      }
+    }
+    
+    .dialog-actions {
+      padding: 1.25rem 1.75rem;
+      border-bottom-left-radius: 24px;
+      border-bottom-right-radius: 24px;
+      
+      button {
+        padding: 0.7rem 1.5rem;
+        border-radius: 12px;
+      }
+    }
+  }
+  
+  .program-info {
+    ::ng-deep {
+      .mat-mdc-tab {
+        padding: 0 1rem;
+        height: 48px;
+        
+        .mat-mdc-tab-label-content {
+          font-size: 0.9rem;
+          
+          mat-icon {
+            font-size: 18px;
+          }
+        }
+      }
+      
+      .mat-mdc-tab-body-content {
+        padding: 1.25rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .workout-calendar-container {
+    padding: 0.75rem;
+    border-radius: 0;
+  }
+  
+  .calendar-header {
+    padding: 1rem;
+    border-radius: 8px;
+    
+    .header-content {
+      .header-icon {
+        width: 40px;
+        height: 40px;
+        
+        mat-icon {
+          font-size: 20px;
+        }
+      }
+      
+      .header-text {
+        h1 {
+          font-size: 1.4rem;
+        }
+      }
+    }
+    
+    .view-toggle {
+      button {
+        padding: 0.35rem 0.6rem;
+        font-size: 0.85rem;
+        
+        mat-icon {
+          margin-right: 0.25rem;
+        }
+      }
+    }
+  }
+  
+  .stats-container {
+    .stat-card {
+      padding: 1rem;
+      
+      .stat-icon {
+        width: 45px;
+        height: 45px;
+        
+        mat-icon {
+          font-size: 22px;
+        }
+      }
+      
+      .stat-content {
+        .stat-value {
+          font-size: 1.6rem;
+        }
+        
+        .stat-label {
+          font-size: 0.85rem;
+        }
+      }
+    }
+  }
+  
+  .calendar-day {
+    border-radius: 8px;
+    
+    .day-header {
+      .day-name {
+        font-size: 1rem;
+      }
+      
+      .workout-type {
+        font-size: 0.8rem;
+      }
+    }
+  }
+  
+  .workout-details-dialog {
+    max-width: 100vw;
+    border-radius: 24px;
+    
+    .dialog-header {
+      padding: 1.25rem;
+      
+      .dialog-title {
+        .day-name {
+          font-size: 1.6rem;
+        }
+        
+        .workout-type {
+          font-size: 1rem;
+        }
+      }
+    }
+    
+    .dialog-content {
+      padding: 1.25rem;
+      
+      .summary-item {
+        padding: 1rem;
+        
+        .summary-icon {
+          width: 45px;
+          height: 45px;
+          
+          mat-icon {
+            font-size: 22px;
+          }
+        }
+        
+        .summary-details {
+          .summary-value {
+            font-size: 1.6rem;
+          }
+          
+          .summary-label {
+            font-size: 0.9rem;
+          }
+        }
+      }
+      
+      .day-notes, .exercise-item .exercise-notes {
+        padding: 1rem;
+      }
+      
+      .exercise-item {
+        .exercise-header {
+          .exercise-title {
+            h4 {
+              font-size: 1.2rem;
+            }
+          }
+        }
+      }
+    }
+    
+    .dialog-actions {
+      padding: 0.75rem 1.25rem;
+      
+      button {
+        padding: 0.6rem 1.25rem;
+      }
+    }
+  }
+  
+  .program-info {
+    border-radius: 8px;
+    
+    ::ng-deep {
+      .mat-mdc-tab {
+        padding: 0 0.75rem;
+        height: 42px;
+        
+        .mat-mdc-tab-label-content {
+          font-size: 0.85rem;
+          
+          mat-icon {
+            font-size: 16px;
+          }
+        }
+      }
+      
+      .mat-mdc-tab-body-content {
+        padding: 1rem;
+      }
+    }
+    
+    .tab-content {
+      .tab-header {
+        h3 {
+          font-size: 1.1rem;
+        }
+      }
+      
+      p {
+        font-size: 0.9rem;
+      }
+    }
+  }
+}
+
+// Fix for dialog backdrop on mobile
+@media (max-width: 768px) {
+  ::ng-deep .workout-details-dialog-container {
+    .mat-mdc-dialog-container {
+      border-radius: 24px;
+    }
+    
+    .mat-mdc-dialog-surface {
+      border-radius: 24px;
+    }
+    
+    .cdk-overlay-pane {
+      max-width: 95vw !important;
+      max-height: 90vh !important;
+    }
+    
+    // Ensure backdrop has dark background on mobile
+    .cdk-overlay-backdrop {
+      background-color: rgba(0, 0, 0, 0.5) !important;
+    }
+    
+    .cdk-overlay-dark-backdrop {
+      background-color: rgba(0, 0, 0, 0.5) !important;
+    }
+  }
+  
+  ::ng-deep .workout-details-backdrop {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+  }
+}
+
+// Additional global styles to ensure backdrop has dark background
+::ng-deep {
+  .cdk-overlay-backdrop.workout-details-backdrop {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+  }
+  
+  .cdk-overlay-dark-backdrop.workout-details-backdrop {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+  }
+  
+  // Target the overlay container directly
+  .cdk-overlay-container .cdk-overlay-backdrop {
+    &.workout-details-backdrop {
+      background-color: rgba(0, 0, 0, 0.5) !important;
+    }
+  }
+}
+
+// Loading and Error States
+.loading-container,
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  padding: 2rem;
+  text-align: center;
+  background: #1a1a1a;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  margin: 2rem;
+}
+
+.loading-container {
+  h3 {
+    margin-top: 1rem;
+    color: #e0e0e0;
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+}
+
+.error-container {
+  .error-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    color: #f44336;
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    color: #e0e0e0;
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    color: #b0b0b0;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  button {
+    background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: box-shadow 0.2s ease;
+
+    &:hover {
+      box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+    }
+
+    mat-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+

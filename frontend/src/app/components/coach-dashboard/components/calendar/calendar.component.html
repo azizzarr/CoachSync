@@ -1,0 +1,60 @@
+<div class="calendar-container">
+  <app-coach-sidebar
+    (sidebarToggle)="onSidebarToggle($event)"
+    [isCollapsed]="isSidebarCollapsed">
+  </app-coach-sidebar>
+
+  <div class="calendar-content" [class.sidebar-collapsed]="isSidebarCollapsed" [class.sidebar-expanded]="!isSidebarCollapsed">
+    <div class="stats-cards">
+      <div class="stat-card">
+        <div class="stat-icon today-sessions">
+          <fa-icon [icon]="faCalendarDay"></fa-icon>
+        </div>
+        <div class="stat-content">
+          <div class="stat-value">{{ todaySessionsCount }}</div>
+          <div class="stat-label">Today's Sessions</div>
+          <div class="stat-trend" [class.positive]="sessionsTrend >= 0" [class.negative]="sessionsTrend < 0">
+            <fa-icon [icon]="sessionsTrend >= 0 ? faArrowUp : faArrowDown"></fa-icon>
+            {{ Math.abs(sessionsTrend) }}%
+          </div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon active-clients">
+          <fa-icon [icon]="faUsers"></fa-icon>
+        </div>
+        <div class="stat-content">
+          <div class="stat-value">{{ activeClientsCount }}</div>
+          <div class="stat-label">Active Clients</div>
+          <div class="stat-trend" [class.positive]="clientsTrend >= 0" [class.negative]="clientsTrend < 0">
+            <fa-icon [icon]="clientsTrend >= 0 ? faArrowUp : faArrowDown"></fa-icon>
+            {{ Math.abs(clientsTrend) }}%
+          </div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon session-duration">
+          <fa-icon [icon]="faClock"></fa-icon>
+        </div>
+        <div class="stat-content">
+          <div class="stat-value">{{ averageSessionDuration }} min</div>
+          <div class="stat-label">Avg. Session Duration</div>
+          <div class="stat-trend" [class.positive]="durationTrend >= 0" [class.negative]="durationTrend < 0">
+            <fa-icon [icon]="durationTrend >= 0 ? faArrowUp : faArrowDown"></fa-icon>
+            {{ Math.abs(durationTrend) }}%
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="calendar-wrapper">
+      <full-calendar #calendar [options]="calendarOptions"></full-calendar>
+    </div>
+  </div>
+
+  <div class="loading-overlay" *ngIf="isLoading">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+</div> 

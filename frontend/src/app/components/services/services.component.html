@@ -1,0 +1,134 @@
+<app-header></app-header>
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-section" [ngStyle]="{'background-image': 'url(assets/img/breadcrumb-bg.jpg)'}">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb-text">
+                    <h2>Our Services</h2>
+                    <div class="bt-option">
+                        <a routerLink="/">Home</a>
+                        <span>Services</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<!-- Services Section Begin -->
+<section class="services-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <span>Our Services</span>
+                    <h2>YOUR FITNESS JOURNEY STARTS HERE</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-sm-6" *ngFor="let service of services">
+                <div class="single-service-item">
+                    <img [src]="service.image" alt="">
+                    <h4>{{service.title}}</h4>
+                    <p>{{service.description}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Services Section End -->
+
+<!-- Banner Section Begin -->
+<section class="banner-section" [ngStyle]="{'background-image': 'url(assets/img/banner-bg.jpg)'}">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="bs-text service-banner">
+                    <h2>Transform Your Fitness Journey</h2>
+                    <div class="bt-tips">Where AI meets expert coaching for your success.</div>
+                    <a href="#" class="play-btn video-popup">
+                        <i class="fa fa-caret-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Banner Section End -->
+
+<!-- Pricing Section Begin -->
+<section class="pricing-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <span>Our Plans</span>
+                    <h2>Choose your plan</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-8" *ngFor="let plan of pricingPlans">
+                <div class="ps-item">
+                    <h3>{{plan.title}}</h3>
+                    <div class="pi-price">
+                        <h2>{{plan.price === 0 ? 'Free' : plan.price}}</h2>
+                        <span>{{plan.period}}</span>
+                    </div>
+                    <ul>
+                        <li *ngFor="let feature of plan.features">{{feature}}</li>
+                    </ul>
+                    <a href="#" class="primary-btn pricing-btn">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Pricing Section End -->
+
+<!-- Get In Touch Section Begin -->
+<div class="gettouch-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="gt-text">
+                    <i class="fa fa-map-marker"></i>
+                    <p>Tunisia, Tunis</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="gt-text">
+                    <i class="fa fa-mobile"></i>
+                    <ul>
+                        <li>+216 95018151</li>
+                        <li>+216 98577529</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="gt-text email">
+                    <i class="fa fa-envelope"></i>
+                    <p>CoachSync&#64;gmail.com</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Get In Touch Section End -->
+
+<app-footer></app-footer>
+
+<!-- Search model Begin -->
+<div class="search-model" [class.show-search]="showSearch">
+    <div class="h-100 d-flex align-items-center justify-content-center">
+        <div class="search-close-switch" (click)="showSearch = false">+</div>
+        <form class="search-model-form" (ngSubmit)="onSearchSubmit($event)">
+            <input type="text" id="search-input" placeholder="Search here.....">
+        </form>
+    </div>
+</div>
+<!-- Search model end -->

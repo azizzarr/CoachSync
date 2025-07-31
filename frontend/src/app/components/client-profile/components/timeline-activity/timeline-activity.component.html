@@ -1,0 +1,118 @@
+<div class="timeline-container">
+  <div class="timeline-header" (click)="toggleCollapse()">
+    <h2>Recent Activities</h2>
+    <div class="header-actions">
+      <mat-icon class="collapse-icon" [class.collapsed]="isCollapsed">
+        {{isCollapsed ? 'expand_more' : 'expand_less'}}
+      </mat-icon>
+    </div>
+  </div>
+
+  <div class="timeline-content" [class.collapsed]="isCollapsed">
+    <div class="timeline-item" *ngFor="let activity of displayedActivities">
+      <div class="timeline-icon" [ngStyle]="{'background': getActivityColor(activity.type)}">
+        <mat-icon>{{getActivityIcon(activity.type)}}</mat-icon>
+      </div>
+
+      <div class="timeline-card">
+        <div class="timeline-card-header">
+          <div class="activity-info">
+            <h3>{{activity.title}}</h3>
+            <div class="activity-meta">
+              <div class="date">
+                <mat-icon>calendar_today</mat-icon>
+                {{activity.date | date:'MMM d, y'}}
+              </div>
+              <div class="time">
+                <mat-icon>schedule</mat-icon>
+                {{activity.date | date:'shortTime'}}
+              </div>
+              <div class="coach" *ngIf="activity.coachName">
+                <img [src]="activity.coachAvatar" [alt]="activity.coachName" class="coach-avatar">
+                {{activity.coachName}}
+              </div>
+            </div>
+          </div>
+          <div class="activity-status" [ngStyle]="{'background': getStatusColor(activity.status)}">
+            <mat-icon>{{getStatusIcon(activity.status)}}</mat-icon>
+            {{activity.status}}
+          </div>
+        </div>
+
+        <div class="timeline-card-content">
+          <p class="description" *ngIf="activity.description">{{activity.description}}</p>
+
+          <div class="exercise-details" *ngIf="activity.exerciseDetails">
+            <div class="details-grid">
+              <div class="detail-item" *ngIf="activity.exerciseDetails.sets">
+                <mat-icon>fitness_center</mat-icon>
+                <span>{{activity.exerciseDetails.sets}} sets</span>
+              </div>
+              <div class="detail-item" *ngIf="activity.exerciseDetails.reps">
+                <mat-icon>repeat</mat-icon>
+                <span>{{activity.exerciseDetails.reps}} reps</span>
+              </div>
+              <div class="detail-item" *ngIf="activity.exerciseDetails.weight">
+                <mat-icon>monitor_weight</mat-icon>
+                <span>{{activity.exerciseDetails.weight}} kg</span>
+              </div>
+              <div class="detail-item" *ngIf="activity.exerciseDetails.duration">
+                <mat-icon>timer</mat-icon>
+                <span>{{activity.exerciseDetails.duration}} min</span>
+              </div>
+            </div>
+
+            <div class="exercise-info-container" *ngIf="activity.exerciseDetails">
+              <div class="exercise-info-header">
+                <mat-icon>info</mat-icon>
+                <h4>Exercise Information</h4>
+              </div>
+              <div class="exercise-info-content">
+                <div class="info-row">
+                  <span class="info-label">Exercise Type</span>
+                  <span class="info-value">{{activity.exerciseDetails.type || 'Strength Training'}}</span>
+                </div>
+                <div class="info-row" *ngIf="activity.exerciseDetails.sets">
+                  <span class="info-label">Sets</span>
+                  <span class="info-value">{{activity.exerciseDetails.sets}}</span>
+                </div>
+                <div class="info-row" *ngIf="activity.exerciseDetails.reps">
+                  <span class="info-label">Reps</span>
+                  <span class="info-value">{{activity.exerciseDetails.reps}}</span>
+                </div>
+                <div class="info-row" *ngIf="activity.exerciseDetails.weight">
+                  <span class="info-label">Weight</span>
+                  <span class="info-value">{{activity.exerciseDetails.weight}} kg</span>
+                </div>
+                <div class="info-row" *ngIf="activity.exerciseDetails.duration">
+                  <span class="info-label">Duration</span>
+                  <span class="info-value">{{activity.exerciseDetails.duration}} minutes</span>
+                </div>
+                <div class="info-row" *ngIf="activity.exerciseDetails.restPeriod">
+                  <span class="info-label">Rest Period</span>
+                  <span class="info-value">{{activity.exerciseDetails.restPeriod}} seconds</span>
+                </div>
+                <div class="info-row" *ngIf="activity.exerciseDetails.intensity">
+                  <span class="info-label">Intensity</span>
+                  <span class="info-value">{{activity.exerciseDetails.intensity}}</span>
+                </div>
+              </div>
+            </div>
+
+            <p class="notes" *ngIf="activity.exerciseDetails.notes">
+              <mat-icon>note</mat-icon>
+              {{activity.exerciseDetails.notes}}
+            </p>
+          </div>
+
+          <div class="attachments" *ngIf="activity.attachments?.length">
+            <div class="attachment-item" *ngFor="let attachment of activity.attachments">
+              <mat-icon>{{getAttachmentIcon(attachment.type)}}</mat-icon>
+              <a [href]="attachment.url" target="_blank">{{attachment.name}}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

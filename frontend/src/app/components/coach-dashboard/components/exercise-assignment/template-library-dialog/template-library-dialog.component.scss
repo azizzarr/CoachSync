@@ -1,0 +1,263 @@
+@use '@angular/material' as mat;
+@import '../../../../../../styles/_variables';
+
+.template-library-dialog {
+  padding: 2rem;
+  max-width: 800px;
+  width: 100%;
+  background: $background-dark;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-lg;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, $accent-color, transparent);
+    opacity: 0.3;
+  }
+
+  .dialog-header {
+    margin-bottom: 2rem;
+    text-align: center;
+
+    h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: $text-primary;
+      margin-bottom: 0.5rem;
+      @include gradient-text;
+    }
+
+    .subtitle {
+      color: $text-secondary;
+      font-size: 1rem;
+      margin: 0;
+    }
+  }
+
+  .dialog-content {
+    max-height: 60vh;
+    overflow-y: auto;
+    padding-right: 1rem;
+    margin-right: -1rem;
+
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 2px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: $accent-color;
+      border-radius: 2px;
+    }
+  }
+
+  .template-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem 0;
+  }
+
+  .template-card {
+    @include glass-effect;
+    @include gradient-border;
+    cursor: pointer;
+    transition: all $transition-medium;
+    position: relative;
+    overflow: hidden;
+
+    &:hover {
+      @include card-hover;
+      transform: translateY(-4px);
+    }
+
+    &.selected {
+      border-color: $accent-color;
+      box-shadow: 0 0 0 2px rgba($accent-color, 0.3);
+    }
+
+    mat-card-header {
+      padding: 1.5rem 1.5rem 0.5rem;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+      mat-card-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: $text-primary;
+        margin-bottom: 0.25rem;
+      }
+
+      mat-card-subtitle {
+        color: $text-secondary;
+        font-size: 0.875rem;
+      }
+    }
+
+    mat-card-content {
+      padding: 1.5rem;
+
+      .exercise-count {
+        @include flex-center;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+        padding: 0.75rem;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: $border-radius-md;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+
+        mat-icon {
+          color: $accent-color;
+        }
+
+        span {
+          color: $text-primary;
+          font-weight: 500;
+        }
+      }
+
+      .template-meta {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+
+        .meta-item {
+          @include flex-center;
+          gap: 0.5rem;
+          padding: 0.5rem;
+          background: rgba(255, 255, 255, 0.03);
+          border-radius: $border-radius-sm;
+          border: 1px solid rgba(255, 255, 255, 0.05);
+
+          mat-icon {
+            color: $text-secondary;
+            font-size: 1rem;
+            width: 1rem;
+            height: 1rem;
+          }
+
+          span {
+            color: $text-secondary;
+            font-size: 0.875rem;
+          }
+        }
+      }
+    }
+
+    mat-card-actions {
+      padding: 0.5rem 1.5rem 1.5rem;
+      display: flex;
+      justify-content: flex-end;
+
+      button {
+        @include flex-center;
+        gap: 0.5rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-size: 0.875rem;
+
+        mat-icon {
+          font-size: 1.25rem;
+          width: 1.25rem;
+          height: 1.25rem;
+        }
+      }
+    }
+  }
+
+  .loading-container {
+    @include flex-center;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 3rem 0;
+
+    p {
+      color: $text-secondary;
+      font-size: 1rem;
+      margin: 0;
+    }
+  }
+
+  .dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+
+    button {
+      padding: 0.75rem 1.5rem;
+      border-radius: $border-radius-md;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-size: 0.875rem;
+      transition: all $transition-medium;
+
+      &.mat-stroked-button {
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: $text-secondary;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.05);
+          transform: translateY(-2px);
+        }
+      }
+
+      &.mat-raised-button {
+        background: $primary-gradient;
+        color: white;
+
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: $shadow-md;
+        }
+
+        &:disabled {
+          background: rgba(255, 255, 255, 0.03);
+          color: rgba(255, 255, 255, 0.4);
+          transform: none;
+          box-shadow: none;
+        }
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .template-library-dialog {
+    padding: 1.5rem;
+
+    .dialog-header {
+      h2 {
+        font-size: 1.75rem;
+      }
+    }
+
+    .template-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .dialog-actions {
+      flex-direction: column;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+} 

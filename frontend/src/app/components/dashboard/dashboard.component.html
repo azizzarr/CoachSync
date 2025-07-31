@@ -1,0 +1,45 @@
+<div class="dashboard-container">
+  <header class="dashboard-header">
+    <h1>Welcome to Your Dashboard</h1>
+    <div class="user-info">
+      <span>Logged in as: {{ userEmail }}</span>
+      <button (click)="logout()" class="logout-button">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </button>
+    </div>
+  </header>
+
+  <main class="dashboard-content">
+    <div class="dashboard-card">
+      <h2>Your Progress</h2>
+      <p>Track your fitness journey and achievements here.</p>
+      <button  type="button" (click)="testBackend()">Test</button>
+    </div>
+  </main>
+
+  <div class="token-section" *ngIf="idToken">
+    <h3>Your Firebase ID Token (for Postman testing):</h3>
+    <div class="token-container">
+      <code>{{ idToken }}</code>
+      <button (click)="copyToken()" class="copy-button">Copy Token</button>
+    </div>
+  </div>
+
+  <div class="button-container">
+    <button mat-raised-button color="primary" (click)="testBackend()" [disabled]="isLoading">
+      Test Backend
+    </button>
+    
+    <button mat-raised-button color="accent" (click)="testSecureBackend()" [disabled]="isLoading">
+      Test Secure Backend
+    </button>
+    
+    <button mat-raised-button color="warn" (click)="logout()">
+      Logout
+    </button>
+
+    <button mat-raised-button color="primary" (click)="navigateToHero()">
+      View Hero Section
+    </button>
+  </div>
+</div>

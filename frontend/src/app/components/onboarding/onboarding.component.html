@@ -1,0 +1,461 @@
+<div class="onboarding-container">
+  <div class="onboarding-content">
+    <div class="header">
+      <div class="logo-container">
+        <mat-icon class="logo-icon">fitness_center</mat-icon>
+      </div>
+      <h1>Welcome to Your Fitness Journey</h1>
+      <p class="subtitle">Let's create your personalized fitness experience and set you up for success</p>
+    </div>
+
+    <div class="stepper-container">
+      <div class="stepper-header">
+        <div class="step-item" [class.active]="currentStep === 1" [class.completed]="currentStep > 1">
+          <div class="step-number">1</div>
+          <div class="step-label">Personal Info</div>
+        </div>
+        <div class="step-item" [class.active]="currentStep === 2" [class.completed]="currentStep > 2">
+          <div class="step-number">2</div>
+          <div class="step-label">Physical Info</div>
+        </div>
+        <div class="step-item" [class.active]="currentStep === 3" [class.completed]="currentStep > 3">
+          <div class="step-number">3</div>
+          <div class="step-label">Fitness Goals</div>
+        </div>
+        <div class="step-item" [class.active]="currentStep === 4">
+          <div class="step-number">4</div>
+          <div class="step-label">Preferences</div>
+        </div>
+        <div class="step-item" [class.active]="currentStep === 5">
+          <div class="step-number">5</div>
+          <div class="step-label">Welcome</div>
+        </div>
+      </div>
+
+      <!-- Step 1: Personal Information -->
+      <div class="step-content" *ngIf="currentStep === 1">
+        <div class="step-header">
+          <div class="step-illustration">
+            <mat-icon class="step-icon">person</mat-icon>
+          </div>
+          <div class="step-text">
+            <h2>Tell us about yourself</h2>
+            <p>We'll use this information to personalize your fitness journey and create the perfect workout plan for you.</p>
+          </div>
+        </div>
+        
+        <form [formGroup]="personalInfoForm" (ngSubmit)="nextStep()">
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="firstName">
+                <mat-icon>person</mat-icon>
+                First Name
+              </label>
+              <input 
+                id="firstName"
+                type="text" 
+                formControlName="firstName" 
+                placeholder="Enter your first name"
+              >
+              <div class="error-message" *ngIf="personalInfoForm.get('firstName')?.hasError('required') && personalInfoForm.get('firstName')?.touched">
+                First name is required
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label for="lastName">
+                <mat-icon>person</mat-icon>
+                Last Name
+              </label>
+              <input 
+                id="lastName"
+                type="text" 
+                formControlName="lastName" 
+                placeholder="Enter your last name"
+              >
+              <div class="error-message" *ngIf="personalInfoForm.get('lastName')?.hasError('required') && personalInfoForm.get('lastName')?.touched">
+                Last name is required
+              </div>
+            </div>
+
+            <div class="form-field full-width">
+              <label for="email">
+                <mat-icon>email</mat-icon>
+                Email
+              </label>
+              <input 
+                id="email"
+                type="email" 
+                formControlName="email" 
+                placeholder="Enter your email"
+              >
+              <div class="error-message" *ngIf="personalInfoForm.get('email')?.hasError('required') && personalInfoForm.get('email')?.touched">
+                Email is required
+              </div>
+              <div class="error-message" *ngIf="personalInfoForm.get('email')?.hasError('email') && personalInfoForm.get('email')?.touched">
+                Please enter a valid email address
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label for="dateOfBirth">
+                <mat-icon>calendar_today</mat-icon>
+                Date of Birth
+              </label>
+              <mat-form-field appearance="outline" class="full-width">
+                <input matInput [matDatepicker]="picker" formControlName="dateOfBirth" placeholder="Choose a date">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+              <div class="error-message" *ngIf="personalInfoForm.get('dateOfBirth')?.hasError('required') && personalInfoForm.get('dateOfBirth')?.touched">
+                Date of birth is required
+              </div>
+            </div>
+
+            <div class="form-field full-width">
+              <label>
+                <mat-icon>wc</mat-icon>
+                Gender
+              </label>
+              <div class="radio-group">
+                <div class="gender-option" 
+                     [class.selected]="personalInfoForm.get('gender')?.value === 'MALE'"
+                     (click)="personalInfoForm.patchValue({gender: 'MALE'})">
+                  <mat-icon>male</mat-icon>
+                  <div class="gender-label">Male</div>
+                </div>
+                <div class="gender-option" 
+                     [class.selected]="personalInfoForm.get('gender')?.value === 'FEMALE'"
+                     (click)="personalInfoForm.patchValue({gender: 'FEMALE'})">
+                  <mat-icon>female</mat-icon>
+                  <div class="gender-label">Female</div>
+                </div>
+                <div class="gender-option" 
+                     [class.selected]="personalInfoForm.get('gender')?.value === 'OTHER'"
+                     (click)="personalInfoForm.patchValue({gender: 'OTHER'})">
+                  <mat-icon>person</mat-icon>
+                  <div class="gender-label">Other</div>
+                </div>
+              </div>
+              <div class="error-message" *ngIf="personalInfoForm.get('gender')?.hasError('required') && personalInfoForm.get('gender')?.touched">
+                Please select your gender
+              </div>
+            </div>
+          </div>
+
+          <div class="step-actions">
+            <button type="submit" class="primary">
+              Next
+              <mat-icon>arrow_forward</mat-icon>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Step 2: Physical Information -->
+      <div class="step-content" *ngIf="currentStep === 2">
+        <div class="step-header">
+          <div class="step-illustration">
+            <mat-icon class="step-icon">fitness_center</mat-icon>
+          </div>
+          <div class="step-text">
+            <h2>Your Physical Information</h2>
+            <p>Help us understand your current physical state to create a safe and effective workout plan.</p>
+          </div>
+        </div>
+
+        <form [formGroup]="physicalInfoForm" (ngSubmit)="nextStep()">
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="height">
+                <mat-icon>height</mat-icon>
+                Height (cm)
+              </label>
+              <div class="slider-container">
+                <mat-slider min="100" max="250" step="1" discrete class="enhanced-slider">
+                  <input matSliderThumb formControlName="height">
+                </mat-slider>
+                <div class="slider-value">{{physicalInfoForm.get('height')?.value || 170}} cm</div>
+              </div>
+              <div class="error-message" *ngIf="physicalInfoForm.get('height')?.hasError('required') && physicalInfoForm.get('height')?.touched">
+                Height is required
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label for="weight">
+                <mat-icon>monitor_weight</mat-icon>
+                Current Weight (kg)
+              </label>
+              <div class="slider-container">
+                <mat-slider min="30" max="300" step="1" discrete class="enhanced-slider">
+                  <input matSliderThumb formControlName="weight">
+                </mat-slider>
+                <div class="slider-value">{{physicalInfoForm.get('weight')?.value || 70}} kg</div>
+              </div>
+              <div class="error-message" *ngIf="physicalInfoForm.get('weight')?.hasError('required') && physicalInfoForm.get('weight')?.touched">
+                Weight is required
+              </div>
+            </div>
+
+            <div class="form-field full-width">
+              <label>
+                <mat-icon>directions_run</mat-icon>
+                Activity Level
+              </label>
+              <div class="activity-levels">
+                <div class="activity-level-card" 
+                     *ngFor="let level of activityLevels" 
+                     [class.selected]="physicalInfoForm.get('activityLevel')?.value === level.value"
+                     (click)="physicalInfoForm.patchValue({activityLevel: level.value})">
+                  <div class="activity-icon">
+                    <mat-icon>{{level.icon}}</mat-icon>
+                  </div>
+                  <div class="activity-info">
+                    <h3>{{level.label}}</h3>
+                    <p>{{level.description}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="error-message" *ngIf="physicalInfoForm.get('activityLevel')?.hasError('required') && physicalInfoForm.get('activityLevel')?.touched">
+                Please select your activity level
+              </div>
+            </div>
+          </div>
+
+          <div class="step-actions">
+            <button type="button" class="secondary" (click)="previousStep()">
+              <mat-icon>arrow_back</mat-icon>
+              Back
+            </button>
+            <button type="submit" class="primary">
+              Next
+              <mat-icon>arrow_forward</mat-icon>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Step 3: Fitness Goals -->
+      <div class="step-content" *ngIf="currentStep === 3">
+        <div class="step-header">
+          <div class="step-illustration">
+            <mat-icon class="step-icon">flag</mat-icon>
+          </div>
+          <div class="step-text">
+            <h2>Your Fitness Goals</h2>
+            <p>Let's set clear goals to help you achieve your desired results.</p>
+          </div>
+        </div>
+
+        <form [formGroup]="fitnessGoalsForm" (ngSubmit)="nextStep()">
+          <div class="goals-grid">
+            <div class="goal-card" 
+                 *ngFor="let goal of fitnessGoals" 
+                 [class.selected]="fitnessGoalsForm.get('primaryGoal')?.value === goal.value"
+                 (click)="fitnessGoalsForm.patchValue({primaryGoal: goal.value})">
+              <div class="goal-icon-container">
+                <mat-icon>{{goal.icon}}</mat-icon>
+              </div>
+              <h3>{{goal.label}}</h3>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="targetWeight">
+                <mat-icon>trending_down</mat-icon>
+                Target Weight (kg)
+              </label>
+              <div class="slider-container">
+                <mat-slider min="30" max="300" step="1" discrete class="enhanced-slider">
+                  <input matSliderThumb formControlName="targetWeight">
+                </mat-slider>
+                <div class="slider-value">{{fitnessGoalsForm.get('targetWeight')?.value || 70}} kg</div>
+              </div>
+              <div class="error-message" *ngIf="fitnessGoalsForm.get('targetWeight')?.hasError('required') && fitnessGoalsForm.get('targetWeight')?.touched">
+                Target weight is required
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label for="weeklyWorkoutDays">
+                <mat-icon>calendar_month</mat-icon>
+                Weekly Workout Days
+              </label>
+              <div class="slider-container">
+                <mat-slider min="1" max="7" step="1" discrete class="enhanced-slider">
+                  <input matSliderThumb formControlName="weeklyWorkoutDays">
+                </mat-slider>
+                <div class="slider-value">{{fitnessGoalsForm.get('weeklyWorkoutDays')?.value || 3}} days</div>
+              </div>
+              <div class="error-message" *ngIf="fitnessGoalsForm.get('weeklyWorkoutDays')?.hasError('required') && fitnessGoalsForm.get('weeklyWorkoutDays')?.touched">
+                Please select your weekly workout days
+              </div>
+            </div>
+          </div>
+
+          <div class="step-actions">
+            <button type="button" class="secondary" (click)="previousStep()">
+              <mat-icon>arrow_back</mat-icon>
+              Back
+            </button>
+            <button type="submit" class="primary">
+              Next
+              <mat-icon>arrow_forward</mat-icon>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Step 4: Preferences -->
+      <div class="step-content" *ngIf="currentStep === 4">
+        <div class="step-header">
+          <div class="step-illustration">
+            <mat-icon class="step-icon">settings</mat-icon>
+          </div>
+          <div class="step-text">
+            <h2>Your Preferences</h2>
+            <p>Help us customize your workout experience based on your preferences and available resources.</p>
+          </div>
+        </div>
+
+        <form [formGroup]="preferencesForm" (ngSubmit)="onSubmit()">
+          <div class="form-grid">
+            <div class="form-field full-width">
+              <label>
+                <mat-icon>schedule</mat-icon>
+                Preferred Workout Time
+              </label>
+              <div class="workout-times">
+                <div class="time-card" 
+                     *ngFor="let time of workoutTimes" 
+                     [class.selected]="preferencesForm.get('preferredWorkoutTime')?.value === time.value"
+                     (click)="preferencesForm.patchValue({preferredWorkoutTime: time.value})">
+                  <div class="time-icon">
+                    <mat-icon>{{time.icon}}</mat-icon>
+                  </div>
+                  <div class="time-info">
+                    <h3>{{time.label}}</h3>
+                    <p>{{time.description}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="error-message" *ngIf="preferencesForm.get('preferredWorkoutTime')?.hasError('required') && preferencesForm.get('preferredWorkoutTime')?.touched">
+                Please select your preferred workout time
+              </div>
+            </div>
+
+            <div class="form-field full-width">
+              <label>
+                <mat-icon>location_on</mat-icon>
+                Workout Location
+              </label>
+              <div class="location-cards">
+                <div class="location-card" 
+                     *ngFor="let location of workoutLocations" 
+                     [class.selected]="preferencesForm.get('workoutLocation')?.value === location.value"
+                     (click)="preferencesForm.patchValue({workoutLocation: location.value})">
+                  <div class="location-icon">
+                    <mat-icon>{{location.icon}}</mat-icon>
+                  </div>
+                  <h3>{{location.label}}</h3>
+                </div>
+              </div>
+              <div class="error-message" *ngIf="preferencesForm.get('workoutLocation')?.hasError('required') && preferencesForm.get('workoutLocation')?.touched">
+                Please select your workout location
+              </div>
+            </div>
+
+            <div class="form-field full-width">
+              <label>
+                <mat-icon>fitness_center</mat-icon>
+                Available Equipment
+              </label>
+              <div class="equipment-chips">
+                <div class="equipment-chip" 
+                     *ngFor="let equipment of equipmentOptions"
+                     [class.selected]="isEquipmentSelected(equipment.value)"
+                     (click)="toggleEquipment(equipment.value)">
+                  <mat-icon class="equipment-icon">{{equipment.icon}}</mat-icon>
+                  <span>{{equipment.label}}</span>
+                </div>
+              </div>
+              <div class="error-message" *ngIf="preferencesForm.get('equipmentAccess')?.hasError('required') && preferencesForm.get('equipmentAccess')?.touched">
+                Please select at least one equipment option
+              </div>
+            </div>
+
+            <div class="form-field full-width">
+              <label for="healthConditions">
+                <mat-icon>health_and_safety</mat-icon>
+                Health Conditions
+              </label>
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-select formControlName="healthConditions" placeholder="Select health conditions (if any)">
+                  <mat-option *ngFor="let condition of healthConditions" [value]="condition.value">
+                    {{condition.label}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="step-actions">
+            <button type="button" class="secondary" (click)="previousStep()">
+              <mat-icon>arrow_back</mat-icon>
+              Back
+            </button>
+            <button type="submit" class="primary">
+              Complete
+              <mat-icon>check</mat-icon>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Welcome Step -->
+      <div class="step-content" *ngIf="currentStep === 5">
+        <div class="welcome-container">
+          <div class="welcome-content">
+            <div class="welcome-icon">
+              <mat-icon>celebration</mat-icon>
+            </div>
+            <h2>Welcome to Your Fitness Journey!</h2>
+            <p class="welcome-message">Your personalized fitness plan is ready. Let's start transforming your life together.</p>
+            
+            <div class="welcome-features">
+              <div class="feature-item">
+                <mat-icon>fitness_center</mat-icon>
+                <span>Personalized Workouts</span>
+              </div>
+              <div class="feature-item">
+                <mat-icon>trending_up</mat-icon>
+                <span>Progress Tracking</span>
+              </div>
+              <div class="feature-item">
+                <mat-icon>schedule</mat-icon>
+                <span>Smart Scheduling</span>
+              </div>
+            </div>
+
+            <div class="welcome-actions">
+              <button class="primary" (click)="startJourney()">
+                Start Your Journey
+                <mat-icon>arrow_forward</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Loading State -->
+<div class="loading-overlay" *ngIf="isSubmitting">
+  <div class="loading-content">
+    <mat-spinner diameter="48" color="accent"></mat-spinner>
+    <p>Creating your personalized plan...</p>
+  </div>
+</div> 

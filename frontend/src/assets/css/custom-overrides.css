@@ -1,0 +1,25 @@
+/* Override problematic font references */
+@font-face {
+  font-family: 'Flaticon';
+  src: url('/assets/fonts/Flaticon.eot');
+  src: url('/assets/fonts/Flaticon.eot?#iefix') format('embedded-opentype'),
+       url('/assets/fonts/Flaticon.woff2') format('woff2'),
+       url('/assets/fonts/Flaticon.woff') format('woff'),
+       url('/assets/fonts/Flaticon.ttf') format('truetype'),
+       url('/assets/fonts/Flaticon.svg#Flaticon') format('svg');
+}
+
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('/assets/fonts/fontawesome-webfont.eot?v=4.7.0');
+  src: url('/assets/fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'),
+       url('/assets/fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'),
+       url('/assets/fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'),
+       url('/assets/fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'),
+       url('/assets/fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
+}
+
+/* Override owl carousel video play button */
+.owl-video-play-icon {
+  background: url('/assets/images/owl.video.play.png') no-repeat !important;
+} 

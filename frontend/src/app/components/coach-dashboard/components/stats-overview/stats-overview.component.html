@@ -1,0 +1,21 @@
+<div class="stats-overview">
+  <div class="stats-grid">
+    <div *ngFor="let stat of stats" class="stat-card" [style.--card-color]="stat.color">
+      <div class="stat-content">
+        <div class="stat-header">
+          <div class="stat-icon">
+            <fa-icon [icon]="stat.icon"></fa-icon>
+          </div>
+          <div class="stat-trend" [class.positive]="stat.trend.isPositive" [class.negative]="!stat.trend.isPositive">
+            <fa-icon [icon]="stat.trend.isPositive ? faArrowUp : faArrowDown"></fa-icon>
+            <span>{{stat.trend.value}}</span>
+          </div>
+        </div>
+        <div class="stat-info">
+          <div class="stat-value">{{stat.value}}</div>
+          <div class="stat-title">{{stat.title}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

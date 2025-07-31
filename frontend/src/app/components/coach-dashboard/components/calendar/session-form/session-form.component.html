@@ -1,0 +1,57 @@
+<div class="session-form-container">
+  <h2 mat-dialog-title>{{ isEditMode ? 'Edit Session' : 'New Session' }}</h2>
+
+  <mat-dialog-content>
+    <form [formGroup]="sessionForm" class="session-form">
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Session Title</mat-label>
+        <input matInput formControlName="title" placeholder="Enter session title">
+        <mat-error *ngIf="sessionForm.get('title')?.hasError('required')">
+          Title is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Start Time</mat-label>
+        <input matInput [matDatepicker]="startPicker" formControlName="start" placeholder="Select start time">
+        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+        <mat-error *ngIf="sessionForm.get('start')?.hasError('required')">
+          Start time is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>End Time</mat-label>
+        <input matInput [matDatepicker]="endPicker" formControlName="end" placeholder="Select end time">
+        <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker>
+        <mat-error *ngIf="sessionForm.get('end')?.hasError('required')">
+          End time is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Client</mat-label>
+        <mat-select formControlName="clientId">
+          <mat-option *ngFor="let client of clients" [value]="client.id">
+            {{ client.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="sessionForm.get('clientId')?.hasError('required')">
+          Client is required
+        </mat-error>
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close class="cancel-button">Cancel</button>
+    <button mat-button *ngIf="isEditMode" color="warn" (click)="deleteSession()" class="delete-button">
+      Delete
+    </button>
+    <button mat-raised-button color="primary" [disabled]="!sessionForm.valid" (click)="submitForm()" class="submit-button">
+      {{ isEditMode ? 'Update' : 'Create' }}
+    </button>
+  </mat-dialog-actions>
+</div> 

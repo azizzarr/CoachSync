@@ -1,0 +1,66 @@
+<div class="template-library-dialog">
+  <div class="dialog-header">
+    <h2>Workout Templates</h2>
+    <p class="subtitle">Select a template to apply to your workout</p>
+  </div>
+
+  <div class="dialog-content" *ngIf="!isLoading; else loading">
+    <div class="template-grid">
+      <mat-card 
+        *ngFor="let template of templates" 
+        class="template-card"
+        [class.selected]="selectedTemplate?.id === template.id"
+        (click)="onTemplateSelect(template)">
+        <mat-card-header>
+          <mat-card-title>{{ template.name }}</mat-card-title>
+          <mat-card-subtitle>{{ template.description }}</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div class="exercise-count">
+            <mat-icon>fitness_center</mat-icon>
+            <span>{{ template.exercises.length }} exercises</span>
+          </div>
+          
+          <div class="template-meta">
+            <div class="meta-item">
+              <mat-icon>person</mat-icon>
+              <span>{{ template.createdBy }}</span>
+            </div>
+            <div class="meta-item">
+              <mat-icon>calendar_today</mat-icon>
+              <span>{{ template.createdAt | date:'mediumDate' }}</span>
+            </div>
+          </div>
+        </mat-card-content>
+
+        <mat-card-actions>
+          <button mat-button color="primary" (click)="onTemplateSelect(template)">
+            <mat-icon>visibility</mat-icon>
+            View Details
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+
+  <ng-template #loading>
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Loading templates...</p>
+    </div>
+  </ng-template>
+
+  <div class="dialog-actions">
+    <button mat-stroked-button (click)="onCancel()">
+      Cancel
+    </button>
+    <button 
+      mat-raised-button 
+      color="primary" 
+      [disabled]="!selectedTemplate"
+      (click)="onApplyTemplate()">
+      Apply Template
+    </button>
+  </div>
+</div> 

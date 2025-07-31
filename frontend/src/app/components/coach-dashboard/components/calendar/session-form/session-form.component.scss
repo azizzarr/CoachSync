@@ -1,0 +1,327 @@
+// Override Material Dialog styles
+::ng-deep {
+  .mat-dialog-container {
+    padding: 0 !important;
+    background: transparent !important;
+    border-radius: 24px !important;
+    overflow: hidden !important;
+    box-shadow: none !important;
+  }
+
+  .cdk-overlay-dark-backdrop {
+    background: rgba(0, 0, 0, 0.6) !important;
+    backdrop-filter: blur(8px);
+  }
+
+  .mat-dialog-content {
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .cdk-overlay-pane {
+    background: transparent !important;
+  }
+}
+
+.session-form-container {
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 24px;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: hidden;
+  isolation: isolate;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  will-change: transform;
+  backdrop-filter: blur(12px);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #ff8c00, transparent);
+    opacity: 0.3;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 20% 20%, rgba(255, 140, 0, 0.03) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(255, 165, 0, 0.03) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: #1a1a1a;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    letter-spacing: -0.5px;
+    flex-shrink: 0;
+    padding-right: 0.5rem;
+    position: relative;
+    z-index: 1;
+
+    &::before {
+      content: '';
+      width: 3px;
+      height: 24px;
+      background: #ff8c00;
+      border-radius: 2px;
+    }
+  }
+
+  .session-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+    margin-right: -0.5rem;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1;
+
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.03);
+      border-radius: 2px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #ff8c00;
+      border-radius: 2px;
+    }
+
+    .form-field {
+      width: 100%;
+      flex-shrink: 0;
+      box-sizing: border-box;
+      position: relative;
+      z-index: 1;
+
+      ::ng-deep {
+        .mat-form-field-wrapper {
+          padding: 0;
+          margin: 0;
+          box-sizing: border-box;
+        }
+
+        .mat-form-field-outline {
+          background-color: rgba(0, 0, 0, 0.03);
+          border-radius: 12px;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .mat-form-field-outline-start,
+        .mat-form-field-outline-end {
+          border-width: 1px;
+          border-color: rgba(0, 0, 0, 0.08);
+        }
+
+        .mat-form-field-label {
+          color: rgba(0, 0, 0, 0.8);
+          font-weight: 500;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .mat-input-element {
+          font-size: 1rem;
+          padding: 0.9rem 0;
+          color: #1a1a1a;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          caret-color: #ff8c00;
+          text-shadow: none;
+        }
+
+        .mat-form-field-flex {
+          padding: 0 1rem;
+        }
+
+        .mat-form-field-subscript-wrapper {
+          margin-top: 0.5rem;
+          padding: 0 0.5rem;
+        }
+
+        .mat-error {
+          color: #ff8c00;
+          font-size: 0.875rem;
+          font-weight: 500;
+        }
+
+        .mat-form-field.mat-focused {
+          .mat-form-field-outline {
+            background: rgba(255, 140, 0, 0.05);
+          }
+
+          .mat-form-field-outline-start,
+          .mat-form-field-outline-end {
+            border-color: #ff8c00;
+          }
+
+          .mat-form-field-label {
+            color: #ff8c00;
+          }
+
+          .mat-input-element {
+            color: #1a1a1a;
+            text-shadow: none;
+          }
+        }
+
+        .mat-form-field.mat-form-field-invalid {
+          .mat-input-element {
+            color: #1a1a1a;
+          }
+        }
+
+        .mat-datepicker-toggle {
+          color: rgba(0, 0, 0, 0.6);
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+          &:hover {
+            color: #ff8c00;
+          }
+        }
+      }
+    }
+  }
+
+  mat-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    flex-shrink: 0;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1;
+
+    button {
+      padding: 0.875rem 1.75rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: 12px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-sizing: border-box;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+
+      mat-icon {
+        font-size: 1.25rem;
+        transition: transform 0.3s ease;
+      }
+
+      &:hover mat-icon {
+        transform: scale(1.1);
+      }
+
+      &.cancel-button {
+        background: rgba(0, 0, 0, 0.05);
+        color: rgba(0, 0, 0, 0.9);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+
+        &:hover {
+          background: rgba(0, 0, 0, 0.1);
+          transform: translateY(-2px);
+        }
+      }
+
+      &.delete-button {
+        background: rgba(255, 140, 0, 0.1);
+        color: #ff8c00;
+        border: 1px solid rgba(255, 140, 0, 0.2);
+
+        &:hover {
+          background: rgba(255, 140, 0, 0.2);
+          transform: translateY(-2px);
+        }
+      }
+
+      &.submit-button {
+        background: #ff8c00;
+        color: #ffffff;
+        border: none;
+
+        &:hover {
+          background: #ffa500;
+          transform: translateY(-2px);
+        }
+
+        &:disabled {
+          background: rgba(0, 0, 0, 0.1);
+          color: rgba(0, 0, 0, 0.4);
+          cursor: not-allowed;
+          transform: none;
+        }
+      }
+    }
+  }
+}
+
+// Mobile adjustments
+@media (max-width: 768px) {
+  .session-form-container {
+    padding: 1.75rem;
+    width: 100%;
+    max-height: 100vh;
+    border-radius: 0;
+
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .session-form {
+      gap: 1.5rem;
+    }
+
+    mat-dialog-actions {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.75rem;
+
+      button {
+        width: 100%;
+        font-size: 0.9rem;
+        padding: 0.75rem 1rem;
+      }
+    }
+  }
+}

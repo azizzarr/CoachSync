@@ -1,0 +1,260 @@
+.activity-timeline {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 16px;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+
+  .timeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+
+    h2 {
+      color: white;
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .header-actions {
+      .filter-button {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.15);
+        }
+
+        fa-icon {
+          font-size: 0.875rem;
+        }
+      }
+    }
+  }
+
+  .timeline-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .timeline-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--activity-color, #4f46e5);
+      border-radius: 4px;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.04);
+      transform: translateX(4px);
+    }
+
+    &.unread {
+      background: rgba(79, 70, 229, 0.1);
+    }
+
+    .timeline-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: var(--activity-color, rgba(79, 70, 229, 0.2));
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+      fa-icon {
+        color: white;
+        font-size: 1rem;
+      }
+
+      &.new_client { --activity-color: #4f46e5; }
+      &.session_completed { --activity-color: #10b981; }
+      &.progress_update { --activity-color: #f59e0b; }
+      &.message { --activity-color: #6366f1; }
+      &.workout_plan { --activity-color: #ec4899; }
+    }
+
+    .timeline-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .activity-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.5rem;
+
+      h3 {
+        color: white;
+        font-size: 1rem;
+        font-weight: 600;
+        margin: 0;
+      }
+
+      .timestamp {
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 0.75rem;
+        white-space: nowrap;
+      }
+    }
+
+    .description {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.875rem;
+      margin: 0 0 0.75rem;
+      line-height: 1.5;
+    }
+
+    .activity-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+
+      .client-avatar {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .client-name {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.875rem;
+        font-weight: 500;
+      }
+    }
+
+    .activity-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.25rem 0.625rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      background: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(4px);
+
+      fa-icon {
+        font-size: 0.75rem;
+      }
+
+      &.completed {
+        color: #10b981;
+        background: rgba(16, 185, 129, 0.1);
+      }
+
+      &.in_progress {
+        color: #f59e0b;
+        background: rgba(245, 158, 11, 0.1);
+
+        fa-icon {
+          animation: spin 1s linear infinite;
+        }
+      }
+
+      &.pending {
+        color: #6366f1;
+        background: rgba(99, 102, 241, 0.1);
+      }
+    }
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .activity-timeline {
+    padding: 1rem;
+
+    .timeline-header {
+      margin-bottom: 1rem;
+
+      h2 {
+        font-size: 1.125rem;
+      }
+    }
+
+    .timeline-item {
+      padding: 0.875rem;
+      gap: 0.875rem;
+
+      .timeline-icon {
+        width: 36px;
+        height: 36px;
+
+        fa-icon {
+          font-size: 0.875rem;
+        }
+      }
+
+      .activity-header h3 {
+        font-size: 0.9375rem;
+      }
+
+      .description {
+        font-size: 0.8125rem;
+      }
+    }
+  }
+}
+
+// Small screens
+@media (max-width: 480px) {
+  .activity-timeline {
+    padding: 0.875rem;
+
+    .timeline-item {
+      padding: 0.75rem;
+      gap: 0.75rem;
+
+      .timeline-icon {
+        width: 32px;
+        height: 32px;
+      }
+
+      .activity-meta {
+        flex-wrap: wrap;
+      }
+    }
+  }
+}

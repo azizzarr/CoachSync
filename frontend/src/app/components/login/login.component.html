@@ -1,0 +1,111 @@
+<div class="login-container">
+  <div class="login-background">
+    <div class="overlay"></div>
+    <div class="gym-elements">
+      <div class="element dumbbell"></div>
+      <div class="element barbell"></div>
+      <div class="element plate"></div>
+    </div>
+  </div>
+
+  <div class="login-content">
+    <div class="login-card" [class.loading]="isLoading">
+      <div class="brand-section">
+        <div class="logo">
+          <img src="assets/img/CoachSync.png" alt="CoachSync Logo">
+        </div>
+      </div>
+
+      <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-header">
+          <h2>Welcome Back</h2>
+        </div>
+
+        <div class="form-group">
+          <div class="input-wrapper">
+            <i class="fas fa-envelope"></i>
+            <input 
+              type="email" 
+              formControlName="email" 
+              placeholder="Email address"
+              [class.is-invalid]="emailControl?.invalid && emailControl?.touched"
+              [class.is-valid]="emailControl?.valid && emailControl?.touched"
+              autocomplete="email"
+            >
+          </div>
+          <div class="error-message" *ngIf="emailControl?.invalid && emailControl?.touched">
+            <i class="fas fa-exclamation-circle"></i>
+            <span *ngIf="emailControl?.errors?.['email']">Please enter a valid email address</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="input-wrapper">
+            <i class="fas fa-lock"></i>
+            <input 
+              type="password" 
+              formControlName="password" 
+              placeholder="Password"
+              [class.is-invalid]="passwordControl?.invalid && passwordControl?.touched"
+              [class.is-valid]="passwordControl?.valid && passwordControl?.touched"
+              autocomplete="current-password"
+            >
+          </div>
+          <div class="error-message" *ngIf="passwordControl?.invalid && passwordControl?.touched">
+            <i class="fas fa-exclamation-circle"></i>
+            <span *ngIf="passwordControl?.errors?.['required']">Password is required</span>
+            <span *ngIf="passwordControl?.errors?.['minlength']">Password must be at least 6 characters</span>
+          </div>
+        </div>
+
+        <div class="form-options">
+          <label class="remember-me">
+            <input type="checkbox" formControlName="rememberMe">
+            <span class="checkmark"></span>
+            <span class="label-text">Remember me</span>
+          </label>
+          <a href="#" class="forgot-password" [class.disabled]="isLoading">Forgot password?</a>
+        </div>
+
+        <div class="alert alert-error" *ngIf="errorMessage">
+          <i class="fas fa-exclamation-circle"></i>
+          <span>{{ errorMessage }}</span>
+        </div>
+
+        <div class="alert alert-success" *ngIf="successMessage">
+          <i class="fas fa-check-circle"></i>
+          <span>{{ successMessage }}</span>
+        </div>
+
+        <button 
+          type="submit" 
+          class="btn-primary"
+          [disabled]="loginForm.invalid || isLoading"
+          [class.loading]="isLoading"
+        >
+          <span class="btn-content">
+            <i class="fas fa-sign-in-alt"></i>
+            <span>Sign In</span>
+          </span>
+          <span class="loading-spinner" *ngIf="isLoading">
+            <i class="fas fa-spinner fa-spin"></i>
+          </span>
+        </button>
+      </form>
+
+      <div class="social-auth" *ngIf="googleAuthEnabled">
+        <div class="divider">
+          <span>OR</span>
+        </div>
+        <button (click)="signInWithGoogle()" [disabled]="isLoading" class="google-button">
+          <i class="fab fa-google"></i>
+          <span>Sign in with Google</span>
+        </button>
+      </div>
+
+      <div class="register-section">
+        <p>Don't have an account? <a (click)="navigateToRegister()" [class.disabled]="isLoading">Create one now</a></p>
+      </div>
+    </div>
+  </div>
+</div> 

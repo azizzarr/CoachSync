@@ -1,0 +1,44 @@
+<app-header></app-header>
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-section" [ngStyle]="{'background-image': 'url(assets/img/breadcrumb-bg.jpg)'}">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb-text">
+                    <h2>Workout Schedule</h2>
+                    <div class="bt-option">
+                        <a routerLink="/">Home</a>
+                        <span>Schedule</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<!-- Class Timetable Section -->
+<section class="class-timetable-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <app-class-timetable></app-class-timetable>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Class Timetable Section End -->
+
+<app-footer></app-footer>
+
+<!-- Search model Begin -->
+<div class="search-model" [class.show-search]="showSearch">
+    <div class="h-100 d-flex align-items-center justify-content-center">
+        <div class="search-close-switch" (click)="showSearch = false">+</div>
+        <form class="search-model-form" (ngSubmit)="onSearchSubmit($event)">
+            <input type="text" id="search-input" placeholder="Search here.....">
+        </form>
+    </div>
+</div>
+<!-- Search model end -->
